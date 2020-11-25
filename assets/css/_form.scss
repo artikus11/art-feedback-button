@@ -1,0 +1,55 @@
+.callback-modal-form__fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.acip-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+
+  label {
+    font-size: 0.875rem;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    text-align: left;
+  }
+}
+
+.error {
+  font-size: 12px;
+  color: red;
+  font-style: italic;
+}
+
+.success {
+  color: #4CAF50;
+  text-align: center;
+  display: block;
+}
+
+.alert {
+  display: inline-block;
+  padding: 1em 1em;
+  font-size: 0.875em;
+  text-align: center;
+  color: white;
+  position: fixed;
+  bottom: 20px;
+  z-index: 1000;
+  width: 280px;
+  -webkit-animation: slide 0.5s forwards;
+  -webkit-animation-delay: 2s;
+  animation: slide 0.5s forwards;
+  animation-delay: 1s;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+}
+
+.alert-success {
+  background-color: #4CAF50;
+}
+
+.alert-danger {
+  background-color: #F44336;
+}

@@ -1,11 +1,13 @@
 <?php
+
 namespace ART\AFB;
+
 /**
  * Class AFB
  * Main AFB class, initialized the plugin
  *
  * @class       AFB
- * @version     1.8.0
+ * @version     1.0.0
  * @author      Artem Abramovich
  */
 class Core {
@@ -17,27 +19,30 @@ class Core {
 	 * @access private
 	 * @var object $instance The instance of AFB.
 	 */
-	private static $instance;
+	private static object $instance;
+
+	/**
+	 * @var string
+	 */
+	private string $suffix;
+
+	/**
+	 * @var \ART\AFB\Rest
+	 */
+	protected Rest $rest;
+
 
 	/**
 	 * Construct.
 	 */
 	public function __construct() {
 
-		$this->includes();
+		$this->suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : 'min.';
 
-		$this->init();
-	}
+		$this->setup_hooks();
 
-
-	/**
-	 * Load plugin parts.
-	 *
-	 * @since 2.0.0
-	 */
-	private function includes() {
-
-		require AFB_PLUGIN_DIR . '/includes/customizer/customizer.php';
+		$this->rest = new Rest;
+		$this->rest->setup_hooks();
 	}
 
 
@@ -47,10 +52,76 @@ class Core {
 	 *
 	 * @since 1.8.0
 	 */
-	public function init() {
+	public function setup_hooks() {
 
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
+
+		add_shortcode( 'afb', [ $this, 'button' ] );
 	}
 
+
+	public function button() {
+
+		wp_enqueue_style( 'afb-style-shortcode' );
+		wp_enqueue_script( 'afb-script-shortcode' );
+		wp_enqueue_script( 'afb-script-modal' );
+		wp_enqueue_script( 'afb-script-mask' );
+
+		ob_start();
+
+		load_template(
+			AFB_PLUGIN_DIR . '/templates/button.php',
+			true,
+			[
+				'label' => 'Заказать звонок',
+				'url'   => rest_url( 'callback/api/v1/window' ),
+				'class' => '',
+			]
+		);
+
+		return ob_get_clean();
+	}
+
+
+	/**
+	 * Подключeние стилей и скриптов
+	 *
+	 * @return void
+	 */
+	public function enqueue() {
+
+		wp_register_style(
+			'afb-style-shortcode',
+			AFB_PLUGIN_URI . 'assets/css/style-afb-shortcode.' . $this->suffix . 'css',
+			[],
+			AFB_PLUGIN_VER
+		);
+
+		wp_register_script(
+			'afb-script-shortcode',
+			AFB_PLUGIN_URI . 'assets/js/script-afb-shortcode.js',
+			[ 'jquery', 'afb-script-modal', 'afb-script-mask' ],
+			AFB_PLUGIN_VER,
+			true
+		);
+
+		wp_register_script(
+			'afb-script-modal',
+			AFB_PLUGIN_URI . 'assets/js/micromodal.' . $this->suffix . 'js',
+			[ 'jquery' ],
+			AFB_PLUGIN_VER,
+			true
+		);
+
+		wp_register_script(
+			'afb-script-mask',
+			AFB_PLUGIN_URI . 'assets/js/vanilla-masker.' . $this->suffix . 'js',
+			[ 'jquery' ],
+			AFB_PLUGIN_VER,
+			true
+		);
+
+	}
 
 
 	/**
@@ -70,6 +141,5 @@ class Core {
 		return self::$instance;
 
 	}
-
 
 }

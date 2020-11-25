@@ -1,9 +1,4 @@
 {
-    "name": "art/afb",
-    "description": "Feedback Button",
-    "require": {
-        "": ""
-    },
     "autoload": {
         "classmap": [
             "classes"
