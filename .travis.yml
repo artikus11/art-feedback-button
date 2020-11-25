@@ -1,0 +1,69 @@
+{
+  "language": "php",
+  "os": [
+      "linux"
+  ],
+  "dist": "xenial",
+  "php": [
+      "5.6",
+      "7.0",
+      "7.1",
+      "7.2"
+  ],
+  "notifications": {
+    "email": [
+      {
+        "on_success": "never",
+        "on_failure": "change"
+      }
+    ]
+  },
+  "before_install": [ ],
+  "script": [
+      "echo 'Tested'"
+  ],
+  "before_deploy": [
+      "git config --local user.name \"artikus11\"",
+      "git config --local user.email \"artikus.sol@gmail.ru\"",
+      "git tag \"2.3.8\""
+  ],
+  "deploy": [
+    {
+      "provider": "releases",
+      "file": [
+          "latest.zip"
+      ],
+      "on": {
+        "repo": "artikus11/art-woocommerce-order-one-click"
+      },
+      "token": {
+        "secure": "VZ7j58tNC6CYVs5VN/P8GKW71DfPYbAvQvoHgxp9VF9l206vhQXINgV7IKI9zeYkrf3B6rrFRgl9jvlome2naTSNZX9GqS3JXtuIpBQKe0zV+/A2ert271AlzdnZ89cW14+Jq1XpKdu4Ya97vi9QNlvRy6boCiHLmrO7RKI+4PfOS1ewu8BseDNOsoTqMWweLwOb0q6lgjd4/viavf8kCZY1Eg4ysYq9txGi2lw2oS1d1AF4FMfiUq1KGZ1FQXJBx/P7fHCSUkT176nZCsE8HC2WcVGHPqi/xGe+QXJi2ZNQCiz6s8bV2SpaqfNtXloHeT/JiGFol8Nifuq7HrYBsGvWC7qwUWSLzOChqKGyAoZtA+PO/PRQAeJoA8NMS8fETeSRzkxT/zpqnffXaZmpEflxXrYqWyuK/0ZLhW/xwLav5YnXVqnrpkNlkwVhGEsros3026gSO/Jnu0dkxiVw9TmQ/i7Dqq1lLhwIxFu7Vm091w13PcDBgLV890PVRBw3eOmiDeQBuosJt0WXEYfA2F+TPt9fNviV6yUKlxdL54NaG+tBppvTO3FQCXGg6Fyy287uqNh8kXMD/xlAZkPLyDEQc1Y72cdqME7eGhQxonqai2oTnlCjMQPGE1Y8uF1Tt39bz4UTja06nAOR+0HMAyIbOvQAapazV0CXAKgXZXk="
+      }
+    }
+  ],
+  "after_deploy": [
+      "release created"
+  ],
+  "jobs": {
+    "include": [
+      {
+        "php": "5.6"
+      },
+      {
+        "php": "7.0"
+      },
+      {
+        "php": "7.1"
+      },
+      {
+        "php": "7.2"
+      },
+      {
+        "php": "7.3"
+      },
+      {
+        "php": "7.4"
+      }
+    ]
+  }
+}

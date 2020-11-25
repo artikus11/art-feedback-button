@@ -1,0 +1,17 @@
+{
+    "name": "art/afb",
+    "description": "Feedback Button",
+    "require": {
+        "": ""
+    },
+    "autoload": {
+        "classmap": [
+            "classes"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "classes"
+        ]
+    }
+}
