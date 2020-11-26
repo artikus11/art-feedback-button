@@ -1,24 +1,24 @@
-<div id="callback-modal" class="callback-modal" aria-hidden="true">
-	<div class="callback-modal__overlay" tabindex="-1" data-custom-close>
+<div id="afb-modal" class="afb-modal" aria-hidden="true">
+	<div class="afb-modal__overlay" tabindex="-1" data-afb-close>
 		<div
-			class="callback-modal__container w-90 w-40-ns"
+			class="afb-modal__container w-90 w-40-ns"
 			role="dialog"
 			aria-modal="true"
 			aria-labelledby="modal-title">
 
-			<header class="callback-modal__header">
-				<div id="modal-title" class="callback-modal__title">Заказать звонок</div>
+			<header class="afb-modal__header">
+				<div id="modal-title" class="afb-modal__title">Заказать звонок</div>
 				<button
 					type="button"
-					class="callback-modal__close js-modal-close-trigger"
+					class="afb-modal__close js-modal-close-trigger"
 					aria-label="Close modal"
-					data-micromodal-close>&#215;
+					data-afb-close>&#215;
 				</button>
 			</header>
 
-			<div id="modal-content" class="callback-modal__content">
-				<form class="callback-modal-form" action="<?php echo rest_url( 'callback/api/v1/form' ); ?>">
-					<div class="callback-modal-form__fields">
+			<div id="modal-content" class="afb-modal__content">
+				<form class="afb-modal-form" action="<?php echo rest_url( 'afb/v1/form' ); ?>">
+					<div class="afb-modal-form__fields">
 						<div class="acip-field-wrapper">
 							<label
 								for="acip-name"
@@ -53,11 +53,11 @@
 								placeholder="7(999) 999-99-99">
 						</div>
 					</div>
-					<button type="button" class="callback-modal__btn callback-modal__btn-primary js-send-modal-form">Отправить</button>
+					<button type="button" class="afb-modal__btn afb-modal__btn-primary js-send-modal-form">Отправить</button>
 				</form>
 
 			</div>
-			<footer class="callback-modal__footer">
+			<footer class="afb-modal__footer">
 
 
 			</footer>

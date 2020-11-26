@@ -11,8 +11,9 @@ if ( ! $args ) {
 
 <button
 	type="button"
-	class="button button-callback-shortcode button-callback-shortcode-js <?php echo esc_attr( $args['class'] ); ?>"
-	data-callback-url="<?php echo esc_attr( $args['url'] ); ?>"
+	class="button button--shortcode button-shortcode-js <?php echo esc_attr( $args['class'] ); ?>"
+	data-window-url="<?php echo esc_attr( $args['url'] ); ?>"
+	data-afb-open
 >
 	<?php echo esc_html( $args['label'] ); ?>
 </button>

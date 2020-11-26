@@ -74,7 +74,7 @@ class Core {
 			true,
 			[
 				'label' => 'Заказать звонок',
-				'url'   => rest_url( 'callback/api/v1/window' ),
+				'url'   => rest_url( 'afb/v1/window' ),
 				'class' => '',
 			]
 		);

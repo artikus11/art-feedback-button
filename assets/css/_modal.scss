@@ -1,5 +1,5 @@
 /* Modal Style */
-.callback-modal {
+.afb-modal {
   display: none;
 
   .modal__container,
@@ -8,32 +8,33 @@
   }
 }
 
-.callback-modal.is-open {
+
+.afb-modal.is-open {
   display: block;
 }
 
-.callback-modal[aria-hidden="false"] {
-  .callback-modal__overlay {
+.afb-modal[aria-hidden="false"] {
+  .afb-modal__overlay {
     animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
-  .callback-modal__container {
+  .afb-modal__container {
     animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
   }
 }
 
-.callback-modal[aria-hidden="true"] {
-  .callback-modal__overlay {
+.afb-modal[aria-hidden="true"] {
+  .afb-modal__overlay {
     animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
   }
 
-  .callback-modal__container {
+  .afb-modal__container {
     animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
   }
 
 }
 
-.callback-modal__overlay {
+.afb-modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -45,7 +46,7 @@
   align-items: center;
 }
 
-.callback-modal__container {
+.afb-modal__container {
   position: relative;
   background-color: #fff;
   color: #111;
@@ -58,13 +59,13 @@
   box-sizing: border-box;
 }
 
-.callback-modal__header {
+.afb-modal__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.callback-modal__title {
+.afb-modal__title {
   margin: 0 auto;
   line-height: 1.25;
   box-sizing: border-box;
@@ -72,9 +73,10 @@
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.5rem;
+  font-family: inherit;
 }
 
-.callback-modal__close {
+.afb-modal__close {
   background: transparent;
   border: 0;
   position: absolute;
@@ -83,6 +85,7 @@
   font-size: 40px;
   width: 40px;
   height: 40px;
+  padding: 0;
   line-height: 1;
   color: #606060;
 
@@ -96,14 +99,14 @@
   }
 }
 
-.callback-modal__content {
+.afb-modal__content {
   margin-top: 2rem;
   margin-bottom: 2rem;
   line-height: 1.5;
   color: rgba(0, 0, 0, .8);
 }
 
-.callback-modal__btn {
+.afb-modal__btn {
   display: block;
   width: 100%;
   font-size: 1rem;
@@ -114,8 +117,6 @@
   border-width: 0;
   cursor: pointer;
   line-height: 1;
-  background-color: #111;
-  color: #fff;
   margin: 10px 0 0 0;
 
   &:focus,
@@ -129,7 +130,7 @@
   }
 }
 
-.callback-modal__btn-primary {
+.afb-modal__btn-primary {
 
 
 }

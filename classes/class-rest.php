@@ -19,7 +19,7 @@ class Rest {
 			'/window',
 			[
 				'methods'             => [ 'POST' ],
-				'callback'            => [ $this, 'callback_window' ],
+				'callback'            => [ $this, 'modal_window' ],
 				'permission_callback' => '__return_true',
 			]
 		);
@@ -29,7 +29,7 @@ class Rest {
 			'/form',
 			[
 				'methods'             => [ 'POST' ],
-				'callback'            => [ $this, 'callback_form' ],
+				'callback'            => [ $this, 'form' ],
 				'permission_callback' => '__return_true',
 			]
 		);
@@ -41,12 +41,12 @@ class Rest {
 	 *
 	 * @return array
 	 */
-	public function callback_window( WP_REST_Request $request ) {
+	public function modal_window( WP_REST_Request $request ) {
 
 		ob_start();
 
 		load_template(
-			dirname( __FILE__ ) . '/templates/callback-form.php',
+			AFB_PLUGIN_DIR . '/templates/modal.php',
 			true,
 			[]
 		);
@@ -63,7 +63,7 @@ class Rest {
 	 *
 	 * @return array
 	 */
-	public function callback_form( WP_REST_Request $request ) {
+	public function form( WP_REST_Request $request ) {
 
 		$fields = $request->get_params();
 
@@ -122,7 +122,7 @@ class Rest {
 	private function wp_mail( $to, $subject, $message ) {
 
 		$headers = [
-			'From: Заявка на обратный звонок с сайта <info@'.parse_url(get_option('home'), PHP_URL_HOST).'>',
+			'From: Заявка на обратный звонок с сайта <info@' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '>',
 			'content-type: text/html',
 		];
 

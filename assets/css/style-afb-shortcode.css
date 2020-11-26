@@ -1,24 +1,24 @@
 /* Modal Style */
-.callback-modal {
+.afb-modal {
   display: none; }
-  .callback-modal .modal__container,
-  .callback-modal .modal__overlay {
+  .afb-modal .modal__container,
+  .afb-modal .modal__overlay {
     will-change: transform; }
 
-.callback-modal.is-open {
+.afb-modal.is-open {
   display: block; }
 
-.callback-modal[aria-hidden="false"] .callback-modal__overlay {
+.afb-modal[aria-hidden="false"] .afb-modal__overlay {
   animation: mmfadeIn 0.3s cubic-bezier(0, 0, 0.2, 1); }
-.callback-modal[aria-hidden="false"] .callback-modal__container {
+.afb-modal[aria-hidden="false"] .afb-modal__container {
   animation: mmslideIn 0.3s cubic-bezier(0, 0, 0.2, 1); }
 
-.callback-modal[aria-hidden="true"] .callback-modal__overlay {
+.afb-modal[aria-hidden="true"] .afb-modal__overlay {
   animation: mmfadeOut 0.3s cubic-bezier(0, 0, 0.2, 1); }
-.callback-modal[aria-hidden="true"] .callback-modal__container {
+.afb-modal[aria-hidden="true"] .afb-modal__container {
   animation: mmslideOut 0.3s cubic-bezier(0, 0, 0.2, 1); }
 
-.callback-modal__overlay {
+.afb-modal__overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -29,7 +29,7 @@
   justify-content: center;
   align-items: center; }
 
-.callback-modal__container {
+.afb-modal__container {
   position: relative;
   background-color: #fff;
   color: #111;
@@ -41,21 +41,22 @@
   overflow-y: auto;
   box-sizing: border-box; }
 
-.callback-modal__header {
+.afb-modal__header {
   display: flex;
   justify-content: space-between;
   align-items: center; }
 
-.callback-modal__title {
+.afb-modal__title {
   margin: 0 auto;
   line-height: 1.25;
   box-sizing: border-box;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 1.5rem; }
+  font-size: 1.5rem;
+  font-family: inherit; }
 
-.callback-modal__close {
+.afb-modal__close {
   background: transparent;
   border: 0;
   position: absolute;
@@ -64,21 +65,22 @@
   font-size: 40px;
   width: 40px;
   height: 40px;
+  padding: 0;
   line-height: 1;
   color: #606060; }
-  .callback-modal__close:hover {
+  .afb-modal__close:hover {
     cursor: pointer;
     color: #111; }
-  .callback-modal__close:focus {
+  .afb-modal__close:focus {
     outline: none; }
 
-.callback-modal__content {
+.afb-modal__content {
   margin-top: 2rem;
   margin-bottom: 2rem;
   line-height: 1.5;
   color: rgba(0, 0, 0, 0.8); }
 
-.callback-modal__btn {
+.afb-modal__btn {
   display: block;
   width: 100%;
   font-size: 1rem;
@@ -89,13 +91,11 @@
   border-width: 0;
   cursor: pointer;
   line-height: 1;
-  background-color: #111;
-  color: #fff;
   margin: 10px 0 0 0; }
-  .callback-modal__btn:focus, .callback-modal__btn:hover {
+  .afb-modal__btn:focus, .afb-modal__btn:hover {
     cursor: pointer;
     opacity: 0.9; }
-  .callback-modal__btn:focus {
+  .afb-modal__btn:focus {
     outline: none; }
 
 @keyframes mmfadeIn {
@@ -118,7 +118,7 @@
     transform: translateY(0); }
   to {
     transform: translateY(-10%); } }
-.callback-modal-form__fields {
+.afb-modal-form__fields {
   display: flex;
   flex-direction: column; }
 
