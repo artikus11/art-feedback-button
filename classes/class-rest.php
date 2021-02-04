@@ -104,8 +104,8 @@ class Rest {
 		ob_start();
 
 		load_template(
-			dirname( __FILE__ ) . '/templates/callback-email.php',
-			true,
+			AFB_PLUGIN_DIR . '/templates/email.php',
+			false,
 			[]
 		);
 
