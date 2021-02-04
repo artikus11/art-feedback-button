@@ -4,15 +4,12 @@
  * Plugin URI: wpruse.ru
  * Text Domain: art-feedback-button
  * Domain Path: /languages
- * Description:
+ * Description: Плагин обратного звонка. Выводит шорткодом нопку обратного звонка.
  * Version: 1.0.0
  * Author: Artem Abramovich
  * Author URI: https://wpruse.ru/
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- *
- * WC requires at least: 3.3.0
- * WC tested up to: 4.2
  *
  * Copyright Artem Abramovich
  *
