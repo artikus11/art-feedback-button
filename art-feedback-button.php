@@ -5,7 +5,7 @@
  * Text Domain: art-feedback-button
  * Domain Path: /languages
  * Description: Плагин обратного звонка. Выводит шорткодом нопку обратного звонка.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Artem Abramovich
  * Author URI: https://wpruse.ru/
  * License: GPL-2.0+

@@ -31,6 +31,11 @@ class Core {
 	 */
 	protected Rest $rest;
 
+	/**
+	 * @var \ART\AFB\Shortcode
+	 */
+	protected Shortcode $shortcode;
+
 
 	/**
 	 * Construct.
@@ -43,6 +48,9 @@ class Core {
 
 		$this->rest = new Rest;
 		$this->rest->setup_hooks();
+
+		$this->shortcode = new Shortcode;
+		$this->shortcode->setup_hooks();
 	}
 
 
@@ -56,30 +64,6 @@ class Core {
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 
-		add_shortcode( 'afb', [ $this, 'button' ] );
-	}
-
-
-	public function button() {
-
-		wp_enqueue_style( 'afb-style-shortcode' );
-		wp_enqueue_script( 'afb-script-shortcode' );
-		wp_enqueue_script( 'afb-script-modal' );
-		wp_enqueue_script( 'afb-script-mask' );
-
-		ob_start();
-
-		load_template(
-			AFB_PLUGIN_DIR . '/templates/button.php',
-			true,
-			[
-				'label' => 'Заказать звонок',
-				'url'   => rest_url( 'afb/v1/window' ),
-				'class' => '',
-			]
-		);
-
-		return ob_get_clean();
 	}
 
 
