@@ -31,13 +31,18 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 	let thisButton = event.target;
 	let url = thisButton.dataset.windowUrl;
 
+	let dataSend = {
+		emails: thisButton.dataset.afbEmails
+	}
+
 	this.setAttribute( 'disabled', 'disabled' );
 
 	viewModal( url, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8'
-		}
+		},
+		body: JSON.stringify(dataSend)
 	} ).then( function( result ) {
 
 		thisButton.insertAdjacentHTML( 'afterend', result.html );

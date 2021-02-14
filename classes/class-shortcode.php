@@ -21,6 +21,7 @@ class Shortcode {
 			[
 				'label' => 'Заказать звонок',
 				'class' => '',
+				'emails' => '',
 			],
 			$atts
 		);
@@ -33,7 +34,8 @@ class Shortcode {
 			[
 				'label' => $atts['label'] ?? 'Заказать звонок',
 				'url'   => rest_url( 'afb/v1/window' ),
-				'class' => $atts['class'] ?? 'Заказать звонок',
+				'class' => $atts['class'] ?? '',
+				'emails' => $atts['emails'] ? base64_encode($atts['emails']) : '',
 			]
 		);
 

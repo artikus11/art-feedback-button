@@ -1,3 +1,11 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+?>
+
 <div id="afb-modal" class="afb-modal" aria-hidden="true">
 	<div class="afb-modal__overlay" tabindex="-1" data-afb-close>
 		<div
@@ -53,6 +61,10 @@
 								placeholder="7(999) 999-99-99">
 						</div>
 					</div>
+					<input
+						name="afb-emails"
+						type="hidden"
+						value="<?php echo esc_attr( $args['emails'] ); ?>">
 					<button type="button" class="afb-modal__btn afb-modal__btn-primary js-send-modal-form">Отправить</button>
 				</form>
 

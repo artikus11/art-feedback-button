@@ -48,7 +48,9 @@ class Rest {
 		load_template(
 			AFB_PLUGIN_DIR . '/templates/modal.php',
 			true,
-			[]
+			[
+				'emails' => $request->get_param( 'emails' ) ?? '',
+			]
 		);
 
 		return [
@@ -101,6 +103,10 @@ class Rest {
 			$email_to[] = get_option( 'admin_email' );
 		}
 
+		if ( $fields['afb-emails'] ) {
+			$email_to = base64_decode( $fields['afb-emails'] ) ;
+		}
+		error_log( print_r(  $email_to, 1 ) );
 		ob_start();
 
 		load_template(
@@ -119,6 +125,13 @@ class Rest {
 	}
 
 
+	/**
+	 * @param $to
+	 * @param $subject
+	 * @param $message
+	 *
+	 * @return bool
+	 */
 	private function wp_mail( $to, $subject, $message ) {
 
 		$headers = [
