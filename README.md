@@ -9,7 +9,8 @@
 * `class` - произвольный ccs класс
 
 Пример шорткода
-```[afb label="Обратный звонок" class="custom-button" emails="art@art.ru, der@tru.ru, art2l@gmail.com, der2@tru.ru```
+
+```[afb label="Обратный звонок" class="custom-button" emails="art@art.ru, der@tru.ru, art2l@gmail.com, der2@tru.ru"]```
 
 ## Changelog
 
