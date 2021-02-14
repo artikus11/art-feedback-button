@@ -10,12 +10,20 @@ class Shortcode {
 	}
 
 
-	public function button() {
+	public function button( $atts ) {
 
 		wp_enqueue_style( 'afb-style-shortcode' );
 		wp_enqueue_script( 'afb-script-shortcode' );
 		wp_enqueue_script( 'afb-script-modal' );
 		wp_enqueue_script( 'afb-script-mask' );
+
+		$atts = shortcode_atts(
+			[
+				'label' => 'Заказать звонок',
+				'class' => '',
+			],
+			$atts
+		);
 
 		ob_start();
 
@@ -23,9 +31,9 @@ class Shortcode {
 			AFB_PLUGIN_DIR . '/templates/button.php',
 			true,
 			[
-				'label' => 'Заказать звонок',
+				'label' => $atts['label'] ?? 'Заказать звонок',
 				'url'   => rest_url( 'afb/v1/window' ),
-				'class' => '',
+				'class' => $atts['class'] ?? 'Заказать звонок',
 			]
 		);
 

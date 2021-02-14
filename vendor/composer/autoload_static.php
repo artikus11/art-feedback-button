@@ -10,6 +10,7 @@ class ComposerStaticInit5445866564f66b959ea2e07a755da9a4
         'ART\\AFB\\Core' => __DIR__ . '/../..' . '/classes/class-core.php',
         'ART\\AFB\\Fields' => __DIR__ . '/../..' . '/classes/class-fields.php',
         'ART\\AFB\\Rest' => __DIR__ . '/../..' . '/classes/class-rest.php',
+        'ART\\AFB\\Shortcode' => __DIR__ . '/../..' . '/classes/class-shortcode.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 

@@ -9,5 +9,6 @@ return array(
     'ART\\AFB\\Core' => $baseDir . '/classes/class-core.php',
     'ART\\AFB\\Fields' => $baseDir . '/classes/class-fields.php',
     'ART\\AFB\\Rest' => $baseDir . '/classes/class-rest.php',
+    'ART\\AFB\\Shortcode' => $baseDir . '/classes/class-shortcode.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
 );
