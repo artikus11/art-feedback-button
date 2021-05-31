@@ -6,7 +6,7 @@ use WP_REST_Request;
 
 class Rest {
 
-	public function setup_hooks() {
+	public function setup_hooks(): void {
 
 		add_action( 'rest_api_init', [ $this, 'route' ] );
 	}
@@ -41,12 +41,12 @@ class Rest {
 	 *
 	 * @return array
 	 */
-	public function modal_window( WP_REST_Request $request ) {
+	public function modal_window( WP_REST_Request $request ): array {
 
 		ob_start();
 
 		load_template(
-			AFB_PLUGIN_DIR . '/templates/modal.php',
+			afb()->get_template( 'modal.php' ),
 			true,
 			[
 				'emails' => $request->get_param( 'emails' ) ?? '',
@@ -65,7 +65,7 @@ class Rest {
 	 *
 	 * @return array
 	 */
-	public function form( WP_REST_Request $request ) {
+	public function form( WP_REST_Request $request ): array {
 
 		$fields = $request->get_params();
 
@@ -95,7 +95,7 @@ class Rest {
 	 *
 	 * @return bool
 	 */
-	private function send( $fields ) {
+	private function send( $fields ): bool {
 
 		$email_to = [];
 
@@ -104,13 +104,13 @@ class Rest {
 		}
 
 		if ( $fields['afb-emails'] ) {
-			$email_to = base64_decode( $fields['afb-emails'] ) ;
+			$email_to = base64_decode( $fields['afb-emails'] );
 		}
-		error_log( print_r(  $email_to, 1 ) );
+
 		ob_start();
 
 		load_template(
-			AFB_PLUGIN_DIR . '/templates/email.php',
+			afb()->get_template( 'email.php' ),
 			false,
 			[]
 		);
@@ -132,7 +132,7 @@ class Rest {
 	 *
 	 * @return bool
 	 */
-	private function wp_mail( $to, $subject, $message ) {
+	private function wp_mail( $to, $subject, $message ): bool {
 
 		$headers = [
 			'From: Заявка на обратный звонок с сайта <info@' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '>',
@@ -143,7 +143,7 @@ class Rest {
 	}
 
 
-	public function validation( $fields ) {
+	public function validation( $fields ): array {
 
 		$error = [];
 

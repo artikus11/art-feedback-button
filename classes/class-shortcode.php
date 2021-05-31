@@ -4,12 +4,17 @@ namespace ART\AFB;
 
 class Shortcode {
 
-	public function setup_hooks() {
+	public function setup_hooks(): void {
 
 		add_shortcode( 'afb', [ $this, 'button' ] );
 	}
 
 
+	/**
+	 * @param $atts
+	 *
+	 * @return false|string
+	 */
 	public function button( $atts ) {
 
 		wp_enqueue_style( 'afb-style-shortcode' );
@@ -19,8 +24,8 @@ class Shortcode {
 
 		$atts = shortcode_atts(
 			[
-				'label' => 'Заказать звонок',
-				'class' => '',
+				'label'  => 'Заказать звонок',
+				'class'  => '',
 				'emails' => '',
 			],
 			$atts
@@ -29,13 +34,13 @@ class Shortcode {
 		ob_start();
 
 		load_template(
-			AFB_PLUGIN_DIR . '/templates/button.php',
+			afb()->get_template( 'button.php' ),
 			true,
 			[
-				'label' => $atts['label'] ?? 'Заказать звонок',
-				'url'   => rest_url( 'afb/v1/window' ),
-				'class' => $atts['class'] ?? '',
-				'emails' => $atts['emails'] ? base64_encode($atts['emails']) : '',
+				'label'  => $atts['label'] ?? 'Заказать звонок',
+				'url'    => rest_url( 'afb/v1/window' ),
+				'class'  => $atts['class'] ?? '',
+				'emails' => $atts['emails'] ? base64_encode( $atts['emails'] ) : '',
 			]
 		);
 
