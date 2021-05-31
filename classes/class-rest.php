@@ -153,9 +153,9 @@ class Rest {
 		$error = [];
 
 		$required = [
-			'acip-name'  => 'Это обязательное поле. Укажите Имя',
-			//'acip-email' => 'Это обязательное поле. Укажите Email',
-			'acip-phone' => 'Это обязательное поле. Укажите Телефон',
+			'afb-name'  => 'Это обязательное поле. Укажите Имя',
+			'afb-email' => 'Это обязательное поле. Укажите Email',
+			'afb-phone' => 'Это обязательное поле. Укажите Телефон',
 		];
 
 		foreach ( $required as $key => $item ) {
@@ -164,7 +164,7 @@ class Rest {
 				$error[ $key ] = $item;
 			}
 
-			if ( 'acip-email' === $key && ! empty( $fields[ $key ] ) && ! is_email( $fields[ $key ] ) ) {
+			if ( 'afb-email' === $key && ! empty( $fields[ $key ] ) && ! is_email( $fields[ $key ] ) ) {
 				$error[ $key ] = 'Указана некорректная почта';
 			}
 		}

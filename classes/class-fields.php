@@ -4,7 +4,7 @@ namespace ART\AFB;
 
 class Fields {
 
-	public function fields_form( $key, $args, $value = null ) {
+	public function fields( $key, $args, $value = null ) {
 
 		$defaults = [
 			'type'              => 'text',
@@ -83,7 +83,7 @@ class Fields {
 		$field    = '';
 		$label_id = $args['id'];
 
-		$field_container = '<p class="form-row %1$s" id="%2$s">%3$s</p>';
+		$field_container = '<div class="afb-field-wrapper %1$s" id="%2$s">%3$s</div>';
 
 		switch ( $args['type'] ) {
 			case 'text':
@@ -324,6 +324,34 @@ class Fields {
 			$args['label'],
 			$required
 		);
+	}
+
+
+	public function get_form_fields(): array {
+
+		return [
+			'afb-name'  => [
+				'type'        => 'text',
+				'label'       => 'Ваше имя',
+				'placeholder' => 'Ваше имя',
+				'required'    => true,
+			],
+			'afb-email' => [
+				'type'        => 'email',
+				'label'       => 'Ваш email',
+				'placeholder' => 'info@mail.com',
+				'required'    => true,
+			],
+			'afb-phone' => [
+				'type'              => 'tel',
+				'label'             => 'Ваш телефон',
+				'placeholder'       => '7 (999) 999-99-99',
+				'required'          => true,
+				'custom_attributes' => [
+					'data-mask' => '9 (999) 999-99-99',
+				],
+			],
+		];
 	}
 
 }

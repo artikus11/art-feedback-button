@@ -35,6 +35,11 @@ class Core {
 	 */
 	protected Shortcode $shortcode;
 
+	/**
+	 * @var \ART\AFB\Fields
+	 */
+	public Fields $fields;
+
 
 	/**
 	 * Construct.
@@ -50,6 +55,8 @@ class Core {
 
 		$this->shortcode = new Shortcode;
 		$this->shortcode->setup_hooks();
+		
+		$this->fields = new Fields();
 	}
 
 

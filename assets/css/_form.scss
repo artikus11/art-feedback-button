@@ -1,9 +1,9 @@
-.afb-modal-form__fields {
+.-modal-form__fields {
   display: flex;
   flex-direction: column;
 }
 
-.acip-field-wrapper {
+.afb-field-wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
@@ -14,11 +14,21 @@
     margin-bottom: 0.25rem;
     text-align: left;
   }
+
+  .required {
+    border-bottom: 0 !important;
+    color: #ff0000;
+    text-decoration: none;
+  }
+
+  .input-text {
+    width: 100%
+  }
 }
 
 .error {
   font-size: 12px;
-  color: red;
+  color: #ff0000;
   font-style: italic;
 }
 
