@@ -1,4 +1,4 @@
-=== Art WooCommerce Order One Click ===
+=== Art Feedback Button ===
 Contributors: artabr
 Donate link: https://wpruse.ru/r/donat/
 Tags: woocommerce, mode catalog

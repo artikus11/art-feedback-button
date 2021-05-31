@@ -11,6 +11,9 @@
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
+ * RequiresWP: 5.5
+ * RequiresPHP: 7.3
+ *
  * Copyright Artem Abramovich
  *
  *     This file is part of Art Feedback Button,

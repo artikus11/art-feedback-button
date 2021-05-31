@@ -12,7 +12,7 @@ class Rest {
 	}
 
 
-	public function route() {
+	public function route(): void {
 
 		register_rest_route(
 			'afb/v1',
@@ -71,8 +71,10 @@ class Rest {
 
 		$error = $this->validation( $fields );
 
+		$response = [];
+
 		if ( ! empty ( $error ) ) {
-			return [
+			$response = [
 				'status'  => 'error',
 				'message' => $error,
 			];
@@ -81,12 +83,13 @@ class Rest {
 		$send = $this->send( $fields );
 
 		if ( $send ) {
-			return [
+			$response = [
 				'status'  => 'success',
 				'message' => 'Сообщение успешно отправлено.',
 			];
 		}
 
+		return $response;
 	}
 
 
@@ -121,18 +124,20 @@ class Rest {
 			$content = str_replace( '[' . $key . ']', $field, $content );
 		}
 
-		return $this->wp_mail( $email_to, 'Заявка на обратный звонок с сайта ', $content );
+		$subject = apply_filters( 'afb_email_subject', 'Заявка на обратный звонок с сайта ' );
+
+		return $this->wp_mail( $email_to, $subject, $content );
 	}
 
 
 	/**
-	 * @param $to
-	 * @param $subject
-	 * @param $message
+	 * @param  string|[] $to
+	 * @param  string $subject
+	 * @param  string $message
 	 *
 	 * @return bool
 	 */
-	private function wp_mail( $to, $subject, $message ): bool {
+	private function wp_mail( $to, string $subject, string $message ): bool {
 
 		$headers = [
 			'From: Заявка на обратный звонок с сайта <info@' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '>',
