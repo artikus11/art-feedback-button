@@ -12,7 +12,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  *
  * RequiresWP: 5.5
- * RequiresPHP: 7.3
+ * RequiresPHP: 7.4
  *
  * Copyright Artem Abramovich
  *

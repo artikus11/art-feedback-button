@@ -329,29 +329,32 @@ class Fields {
 
 	public function get_form_fields(): array {
 
-		return [
-			'afb-name'  => [
-				'type'        => 'text',
-				'label'       => 'Ваше имя',
-				'placeholder' => 'Ваше имя',
-				'required'    => true,
-			],
-			'afb-email' => [
-				'type'        => 'email',
-				'label'       => 'Ваш email',
-				'placeholder' => 'info@mail.com',
-				'required'    => true,
-			],
-			'afb-phone' => [
-				'type'              => 'tel',
-				'label'             => 'Ваш телефон',
-				'placeholder'       => '7 (999) 999-99-99',
-				'required'          => true,
-				'custom_attributes' => [
-					'data-mask' => '9 (999) 999-99-99',
+		return apply_filters(
+			'afb_form_fields',
+			[
+				'afb-name'  => [
+					'type'        => 'text',
+					'label'       => 'Ваше имя',
+					'placeholder' => 'Ваше имя',
+					'required'    => true,
 				],
-			],
-		];
+				'afb-email' => [
+					'type'        => 'email',
+					'label'       => 'Ваш email',
+					'placeholder' => 'info@mail.com',
+					'required'    => true,
+				],
+				'afb-phone' => [
+					'type'              => 'tel',
+					'label'             => 'Ваш телефон',
+					'placeholder'       => '7 (999) 999-99-99',
+					'required'          => true,
+					'custom_attributes' => [
+						'data-mask' => '9 (999) 999-99-99',
+					],
+				],
+			]
+		);
 	}
 
 }

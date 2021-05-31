@@ -55,7 +55,7 @@ class Core {
 
 		$this->shortcode = new Shortcode;
 		$this->shortcode->setup_hooks();
-		
+
 		$this->fields = new Fields();
 	}
 
@@ -154,7 +154,7 @@ class Core {
 			$template_path = sprintf( "%s/templates/%s", afb()->plugin_path(), $template_name );
 		}
 
-		return $template_path;
+		return apply_filters( 'afb_locate_template', $template_path );
 	}
 
 
