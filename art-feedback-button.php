@@ -5,7 +5,7 @@
  * Text Domain: art-feedback-button
  * Domain Path: /languages
  * Description: Плагин обратного звонка. Выводит шорткодом нопку обратного звонка.
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Artem Abramovich
  * Author URI: https://wpruse.ru/
  * License: GPL-2.0+
@@ -42,7 +42,7 @@ const AFB_PLUGIN_DIR = __DIR__;
 define( 'AFB_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
 define( 'AFB_PLUGIN_FILE', plugin_basename( __FILE__ ) );
 
-const AFB_PLUGIN_VER = '1.0.1';
+const AFB_PLUGIN_VER = '1.1.0';
 
 require AFB_PLUGIN_DIR . '/vendor/autoload.php';
 

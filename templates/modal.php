@@ -58,13 +58,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 								class=""
 								name="acip-phone"
 								type="tel"
-								placeholder="7(999) 999-99-99">
+								placeholder="7 (999) 999-99-99"
+								data-mask="9 (999) 999-99-99">
 						</div>
 					</div>
 					<input
 						name="afb-emails"
 						type="hidden"
 						value="<?php echo esc_attr( $args['emails'] ); ?>">
+
 					<button type="button" class="afb-modal__btn afb-modal__btn-primary js-send-modal-form">Отправить</button>
 				</form>
 
