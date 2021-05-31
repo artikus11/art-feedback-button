@@ -31,27 +31,19 @@
  *     along with WordPress. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace ART\AFB;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$plugin_data = get_file_data(
-	__FILE__,
-	array(
-		'ver'  => 'Version',
-		'name' => 'Plugin Name',
-	)
-);
-
-define( 'AFB_PLUGIN_DIR', __DIR__ );
+const AFB_PLUGIN_DIR = __DIR__;
 define( 'AFB_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
 define( 'AFB_PLUGIN_FILE', plugin_basename( __FILE__ ) );
 
-define( 'AFB_PLUGIN_VER', $plugin_data['ver'] );
-define( 'AFB_PLUGIN_NAME', $plugin_data['name'] );
-
 require AFB_PLUGIN_DIR . '/vendor/autoload.php';
 
-$afb = new Core();
+function afb() {
+
+	return ART\AFB\Core::instance();
+}
+
+afb();

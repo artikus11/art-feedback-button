@@ -13,13 +13,12 @@ namespace ART\AFB;
 class Core {
 
 	/**
-	 * Instance of AFB.
+	 * Instance of Selection_Autoparts.
 	 *
-	 * @since  1.8.0
+	 * @since  1.0.0
 	 * @access private
-	 * @var object $instance The instance of AFB.
 	 */
-	private static object $instance;
+	private static ?object $instance = null;
 
 	/**
 	 * @var string
@@ -60,7 +59,7 @@ class Core {
 	 *
 	 * @since 1.8.0
 	 */
-	public function setup_hooks() {
+	public function setup_hooks(): void {
 
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
 
@@ -72,7 +71,7 @@ class Core {
 	 *
 	 * @return void
 	 */
-	public function enqueue() {
+	public function enqueue(): void {
 
 		wp_register_style(
 			'afb-style-shortcode',
