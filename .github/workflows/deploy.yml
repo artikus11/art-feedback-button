@@ -15,14 +15,6 @@ jobs:
     name: "Tagged Release"
     runs-on: "ubuntu-latest"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install composer requirements
-        run: |
-          composer update
-          composer install --no-dev --prefer-dist --no-progress
-
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
