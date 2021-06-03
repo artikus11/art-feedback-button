@@ -11,19 +11,16 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    name: New tag
-    runs-on: ubuntu-latest
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: "ubuntu-latest"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Install composer requirements
-        run: composer install --no-dev --prefer-dist --no-progress --no-suggest
-  tagged-release:
-    name: "Tagged Release"
-    runs-on: "ubuntu-latest"
-    steps:
+        run: composer install
+
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
