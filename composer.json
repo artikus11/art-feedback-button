@@ -1,12 +1,23 @@
 {
-    "autoload": {
-        "classmap": [
-            "classes"
-        ]
-    },
-    "autoload-dev": {
-        "classmap": [
-            "classes"
-        ]
+  "name": "art/feedback-button",
+  "description": "Callback plugin. Displays a callback button as a shortcode.",
+  "keywords": [
+    "art",
+    "feedback",
+    "button"
+  ],
+  "homepage": "https://github.com/artikus11/art-feedback-button",
+  "authors": [
+    {
+      "name": "Artem Abramovich",
+      "homepage": "https://wpruse.ru"
     }
+  ],
+  "require": {},
+  "require-dev": {},
+  "autoload": {
+    "classmap": [
+      "classes"
+    ]
+  }
 }
