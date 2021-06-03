@@ -20,6 +20,7 @@ jobs:
 
       - name: Install composer requirements
         run: |
+          composer update
           composer install --no-dev --prefer-dist --no-progress
 
       - uses: "marvinpinto/action-automatic-releases@latest"
