@@ -1,4 +1,10 @@
 <?php
+/**
+ * Файл шаблона модального окна
+ *
+ * @global $args
+ * @package art-feedback-button
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

@@ -1,6 +1,7 @@
 {
   "name": "art/feedback-button",
   "description": "Callback plugin. Displays a callback button as a shortcode.",
+  "license": "GPL-2.0",
   "keywords": [
     "art",
     "feedback",
