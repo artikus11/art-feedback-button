@@ -88,7 +88,9 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 		const modalWindowContent = document.querySelector( '.afb-modal__content' );
 		const form = document.querySelector( '.afb-modal-form' );
 
-		document.querySelector( '.js-send-modal-form' ).addEventListener( 'click', function( event ) {
+		form.addEventListener( 'submit', function( event ) {
+
+			event.preventDefault();
 
 			const FD = new FormData( form );
 			const url = form.getAttribute( 'action' );

@@ -23,5 +23,5 @@
 		type="hidden"
 		value="<?php echo esc_attr( $args['emails'] ); ?>">
 
-	<button type="button" class="afb-modal__btn afb-modal__btn-primary js-send-modal-form">Отправить</button>
+	<button type="submit" class="afb-modal__btn afb-modal__btn-primary js-send-modal-form">Отправить</button>
 </form>
