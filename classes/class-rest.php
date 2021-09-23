@@ -137,11 +137,14 @@ class Rest {
 
 		$error = [];
 
-		$required = [
-			'afb-name'  => 'Это обязательное поле. Укажите Имя',
-			'afb-email' => 'Это обязательное поле. Укажите Email',
-			'afb-phone' => 'Это обязательное поле. Укажите Телефон',
-		];
+		$required = apply_filters(
+			'afb_fields_validation_notices',
+			[
+				'afb-name'  => 'Это обязательное поле. Укажите Имя',
+				'afb-email' => 'Это обязательное поле. Укажите Email',
+				'afb-phone' => 'Это обязательное поле. Укажите Телефон',
+			]
+		);
 
 		foreach ( $required as $key => $item ) {
 
