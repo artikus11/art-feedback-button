@@ -11,7 +11,6 @@ class Rest {
 		add_action( 'rest_api_init', [ $this, 'route' ] );
 	}
 
-
 	public function route(): void {
 
 		register_rest_route(
@@ -35,7 +34,6 @@ class Rest {
 		);
 	}
 
-
 	/**
 	 * @param  WP_REST_Request $request
 	 *
@@ -58,7 +56,6 @@ class Rest {
 
 		];
 	}
-
 
 	/**
 	 * @param  WP_REST_Request $request
@@ -92,7 +89,6 @@ class Rest {
 		return $response;
 	}
 
-
 	/**
 	 * @param $fields
 	 *
@@ -100,14 +96,10 @@ class Rest {
 	 */
 	private function send( $fields ): bool {
 
-		$email_to = [];
-
-		if ( ! $email_to ) {
-			$email_to[] = get_option( 'admin_email' );
-		}
+		$email_to = [ get_option( 'admin_email' ) ];
 
 		if ( $fields['afb-emails'] ) {
-			$email_to = base64_decode( $fields['afb-emails'] );
+			$email_to = array_map( 'trim', explode( ',', base64_decode( $fields['afb-emails'] ) ) );
 		}
 
 		ob_start();
@@ -129,7 +121,6 @@ class Rest {
 		return $this->wp_mail( $email_to, $subject, $content );
 	}
 
-
 	/**
 	 * @param  string|[] $to
 	 * @param  string $subject
@@ -146,7 +137,6 @@ class Rest {
 
 		return wp_mail( $to, $subject, $message, $headers );
 	}
-
 
 	public function validation( $fields ): array {
 

@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					afb()->get_template( 'form.php' ),
 					true,
 					[
-						'emails' => $args['emails'] ? base64_encode( $args['emails'] ) : '',
+						'emails' => $args['emails'],
 					]
 				);
 				?>
