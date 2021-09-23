@@ -113,11 +113,15 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 						event.target.removeAttribute( 'disabled' );
 					}
 
-					if ( result.status === 'error' ) {
+					if ( response.ok === false ) {
 						let arr = result.message;
 
 						for ( let key in arr ) {
 							let elEr = modalWindow.querySelector( 'label[for="' + key + '"]' );
+
+							if (result.data.status === 405) {
+								elEr = form;
+							}
 
 							elEr.insertAdjacentHTML( 'beforeend', '<span class="error">' + arr[key] + '</span>' );
 

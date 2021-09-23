@@ -2,6 +2,7 @@
 
 namespace ART\AFB;
 
+use WP_Error;
 use WP_REST_Request;
 
 class Rest {
@@ -60,33 +61,27 @@ class Rest {
 	/**
 	 * @param  WP_REST_Request $request
 	 *
-	 * @return array
 	 */
-	public function form( WP_REST_Request $request ): array {
+	public function form( WP_REST_Request $request ) {
 
 		$fields = $request->get_params();
 
 		$error = $this->validation( $fields );
 
-		$response = [];
-
 		if ( ! empty ( $error ) ) {
-			$response = [
-				'status'  => 'error',
-				'message' => $error,
-			];
+			return new WP_Error( 'error', $error, [ 'status' => 406 ] );
 		}
 
 		$send = $this->send( $fields );
 
-		if ( $send ) {
-			$response = [
-				'status'  => 'success',
-				'message' => 'Сообщение успешно отправлено.',
-			];
+		if ( ! $send ) {
+			return new WP_Error( 'error', 'Что-то пошло не так', [ 'status' => 405 ] );
 		}
 
-		return $response;
+		return [
+			'status'  => 'success',
+			'message' => 'Сообщение успешно отправлено.',
+		];
 	}
 
 	/**
