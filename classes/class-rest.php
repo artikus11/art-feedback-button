@@ -135,29 +135,29 @@ class Rest {
 
 	public function validation( $fields ): array {
 
-		$error = [];
+		$fields_default = afb()->fields->get_form_fields();
 
-		$required = apply_filters(
-			'afb_fields_validation_notices',
-			[
-				'afb-name'  => 'Это обязательное поле. Укажите Имя',
-				'afb-email' => 'Это обязательное поле. Укажите Email',
-				'afb-phone' => 'Это обязательное поле. Укажите Телефон',
-			]
-		);
+		$errors   = [];
+		$required = [];
 
-		foreach ( $required as $key => $item ) {
-
-			if ( empty( $fields[ $key ] ) || ! isset( $fields[ $key ] ) ) {
-				$error[ $key ] = $item;
-			}
-
-			if ( 'afb-email' === $key && ! empty( $fields[ $key ] ) && ! is_email( $fields[ $key ] ) ) {
-				$error[ $key ] = 'Указана некорректная почта';
+		foreach ( $fields_default as $name => $value ) {
+			if ( false !== $value['required'] ) {
+				$required[ $name ] = $value['notice'];
 			}
 		}
 
-		return $error;
+		foreach ( $required as $key => $item ) {
+
+			if ( empty( $fields[ $key ] ) ) {
+				$errors[ $key ] = $item;
+			}
+
+			if ( false !== strpos( $key, 'email' ) && ! is_email( $fields[ $key ] ) ) {
+				$errors[ $key ] = 'Указана некорректная почта';
+			}
+		}
+
+		return $errors;
 	}
 
 }

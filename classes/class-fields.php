@@ -157,7 +157,6 @@ class Fields {
 		return $field;
 	}
 
-
 	/**
 	 * @param         $args
 	 * @param         $key
@@ -170,18 +169,18 @@ class Fields {
 	protected function get_text( $args, $key, $value, array $custom_attributes, string $field ): string {
 
 		return sprintf(
-			'<input type="%1$s" class="input-text %2$s" name="%3$s" id="%4$s" placeholder="%5$s"  value="%6$s" %7$s />',
+			'<input type="%1$s" class="input-text %2$s" name="%3$s" id="%4$s" placeholder="%5$s"  value="%6$s" %7$s %8$s />',
 			esc_attr( $args['type'] ),
 			esc_attr( implode( ' ', $args['input_class'] ) ),
 			esc_attr( $key ),
 			esc_attr( $args['id'] ),
 			esc_attr( $args['placeholder'] ),
 			esc_attr( $value ),
-			implode( ' ', $custom_attributes )
+			implode( ' ', $custom_attributes ),
+			false !== $args['required'] ? 'required' : ''
 		);
 
 	}
-
 
 	/**
 	 * @param        $args
@@ -229,7 +228,6 @@ class Fields {
 		return [ $field, $args ];
 	}
 
-
 	/**
 	 * @param         $args
 	 * @param  string $label_id
@@ -273,7 +271,6 @@ class Fields {
 		return [ $label_id, $args, $field ];
 	}
 
-
 	/**
 	 * @param         $key
 	 * @param         $args
@@ -300,7 +297,6 @@ class Fields {
 		return [ $args, $field ];
 	}
 
-
 	/**
 	 * @param         $args
 	 * @param  array  $custom_attributes
@@ -326,7 +322,6 @@ class Fields {
 		);
 	}
 
-
 	public function get_form_fields(): array {
 
 		return apply_filters(
@@ -337,18 +332,21 @@ class Fields {
 					'label'       => 'Ваше имя',
 					'placeholder' => 'Ваше имя',
 					'required'    => true,
+					'notice'      => 'Это обязательное поле. Укажите Имя',
 				],
 				'afb-email' => [
 					'type'        => 'email',
 					'label'       => 'Ваш email',
 					'placeholder' => 'info@mail.com',
 					'required'    => true,
+					'notice'      => 'Это обязательное поле. Укажите E-mail',
 				],
 				'afb-phone' => [
 					'type'              => 'tel',
 					'label'             => 'Ваш телефон',
 					'placeholder'       => '7 (999) 999-99-99',
-					'required'          => true,
+					'required'          => false,
+					'notice'            => 'Это обязательное поле. Укажите Телефон',
 					'custom_attributes' => [
 						'data-mask' => '9 (999) 999-99-99',
 					],
