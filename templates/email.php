@@ -142,10 +142,12 @@
 										<tr>
 											<td style="text-align: left; padding: 20px 0;">
 												<div
-													style="margin: 0 auto; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; color:#44495f;font-size:20px;line-height:1.45;">
-													<h2>Вам пришла заявка на обратный звонок</h2>
+													style="margin: 0 auto; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; color:#44495f;font-size:20px;line-height:1.45;">Вам пришла заявка на обратный звонок</div>
 
-												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
 												<div
 													style="margin: 0 auto; padding: 20px 0; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; color:#44495f;font-size:16px;line-height:1.2;">
 													<?php foreach ( $args['fields'] as $field => $value ): ?>
