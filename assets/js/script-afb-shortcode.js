@@ -87,6 +87,7 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 		const modalWindow = document.querySelector( '.afb-modal__container' );
 		const modalWindowContent = document.querySelector( '.afb-modal__content' );
 		const form = document.querySelector( '.afb-modal-form' );
+		const button = document.querySelector( '.js-send-modal-form' );
 
 		form.addEventListener( 'submit', function( event ) {
 
@@ -95,7 +96,7 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 			const FD = new FormData( form );
 			const url = form.getAttribute( 'action' );
 
-			event.target.setAttribute( 'disabled', 'disabled' );
+			button.setAttribute( 'disabled', 'disabled' );
 
 			modalWindow.classList.add( 'preload' );
 
@@ -108,10 +109,8 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 
 					let result = await response.json();
 
-					if ( response.ok ) {
-						modalWindow.classList.remove( 'preload' );
-						event.target.removeAttribute( 'disabled' );
-					}
+					modalWindow.classList.remove( 'preload' );
+					button.removeAttribute( 'disabled' );
 
 					if ( response.ok === false ) {
 						let arr = result.message;
@@ -119,7 +118,7 @@ document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', func
 						for ( let key in arr ) {
 							let elEr = modalWindow.querySelector( 'label[for="' + key + '"]' );
 
-							if (result.data.status === 405) {
+							if ( result.data.status === 405 ) {
 								elEr = form;
 							}
 
