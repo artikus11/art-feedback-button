@@ -1,6 +1,9 @@
 <?php
 /**
  * Шаблон письма.
+ *
+ * @global $args
+ * @package art-feedback-button
  */
 
 ?>
@@ -140,17 +143,16 @@
 											<td style="text-align: left; padding: 20px 0;">
 												<div
 													style="margin: 0 auto; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; color:#44495f;font-size:20px;line-height:1.45;">
-													Вам пришла заявка на обратный звонок
+													<h2>Вам пришла заявка на обратный звонок</h2>
 
 												</div>
 												<div
 													style="margin: 0 auto; padding: 20px 0; font-family: Helvetica Neue, Helvetica, Arial, sans-serif; color:#44495f;font-size:16px;line-height:1.2;">
-													<strong>Имя:</strong> <strong><em>[acip-name]</em></strong>
-													<br/>
-													<!--<strong>Email:</strong> <strong><em>[acip-email]</em></strong>
-													<br/>-->
-													<strong>Телефон:</strong> <strong><em>[acip-phone]</em></strong>
-													<br/>
+													<?php foreach ( $args['fields'] as $field => $value ): ?>
+														<strong><?php echo esc_html( $field ); ?>:</strong>
+														<strong><em><?php echo esc_html( $value ); ?></em></strong>
+														<br/>
+													<?php endforeach; ?>
 												</div>
 											</td>
 										</tr>

@@ -97,19 +97,19 @@ class Rest {
 			$email_to = array_map( 'trim', explode( ',', base64_decode( $fields['afb-emails'] ) ) );
 		}
 
+		$email_content = $this->email_fields( $fields );
+
 		ob_start();
 
 		load_template(
 			afb()->get_template( 'email.php' ),
 			false,
-			[]
+			[
+				'fields' => $email_content,
+			]
 		);
 
-		$content = ob_get_clean();
-
-		foreach ( $fields as $key => $field ) {
-			$content = str_replace( '[' . $key . ']', $field, $content );
-		}
+		$content = apply_filters( 'afb_email_content', ob_get_clean(), );
 
 		$subject = apply_filters( 'afb_email_subject', 'Заявка на обратный звонок с сайта ' );
 
@@ -158,6 +158,29 @@ class Rest {
 		}
 
 		return $errors;
+	}
+
+	/**
+	 * @param $fields
+	 *
+	 * @return array
+	 */
+	protected function email_fields( $fields ): array {
+
+		$fields_default = afb()->fields->get_form_fields();
+
+		$email_fields  = [];
+		$email_content = [];
+
+		foreach ( $fields_default as $field => $value ) {
+			$email_fields[ $field ] = $value['email_label'];
+		}
+
+		foreach ( $email_fields as $key => $item ) {
+			$email_content[ $item ] = $fields[ $key ];
+		}
+
+		return $email_content;
 	}
 
 }

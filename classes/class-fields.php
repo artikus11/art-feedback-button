@@ -333,6 +333,7 @@ class Fields {
 					'placeholder' => 'Ваше имя',
 					'required'    => true,
 					'notice'      => 'Это обязательное поле. Укажите Имя',
+					'email_label' => 'Имя',
 				],
 				'afb-email' => [
 					'type'        => 'email',
@@ -340,15 +341,17 @@ class Fields {
 					'placeholder' => 'info@mail.com',
 					'required'    => true,
 					'notice'      => 'Это обязательное поле. Укажите E-mail',
+					'email_label' => 'E-mail',
 				],
 				'afb-phone' => [
 					'type'              => 'tel',
 					'label'             => 'Ваш телефон',
 					'placeholder'       => '7 (999) 999-99-99',
-					'required'          => false,
+					'required'          => true,
 					'notice'            => 'Это обязательное поле. Укажите Телефон',
+					'email_label'       => 'Телефон',
 					'custom_attributes' => [
-						'data-mask' => '9 (999) 999-99-99',
+						'data-mask' => '+7 (999) 999-99-99',
 					],
 				],
 			]
