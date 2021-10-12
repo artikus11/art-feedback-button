@@ -61,6 +61,7 @@ class Rest {
 	/**
 	 * @param  WP_REST_Request $request
 	 *
+	 * @return string[]|\WP_Error
 	 */
 	public function form( WP_REST_Request $request ) {
 

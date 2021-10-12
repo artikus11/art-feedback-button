@@ -35,7 +35,7 @@ class Shortcode {
 
 		load_template(
 			afb()->get_template( 'button.php' ),
-			true,
+			false,
 			[
 				'label'  => $atts['label'] ?? 'Заказать звонок',
 				'url'    => rest_url( 'afb/v1/window' ),

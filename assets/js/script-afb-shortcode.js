@@ -40,120 +40,134 @@ function viewModal( url, param ) {
 }
 
 
-document.querySelector( '.button-shortcode-js' ).addEventListener( 'click', function( event ) {
+function sendForm( form, button, modalWindow, modalWindowContent ) {
+	form.addEventListener( 'submit', function( event ) {
 
-	let thisButton = event.target;
-	let url = thisButton.dataset.windowUrl;
+		event.preventDefault();
 
-	let dataSend = {
-		emails: thisButton.dataset.afbEmails
-	};
+		const FD = new FormData( form );
+		const url = form.getAttribute( 'action' );
 
-	this.setAttribute( 'disabled', 'disabled' );
+		button.setAttribute( 'disabled', 'disabled' );
 
-	viewModal( url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8'
-		},
-		body: JSON.stringify( dataSend )
-	} ).then( function( result ) {
+		modalWindow.classList.add( 'preload' );
 
-		thisButton.insertAdjacentHTML( 'afterend', result.html );
-		thisButton.removeAttribute( 'disabled' );
+		(
+			async() => {
+				let response = await fetch( url, {
+					method: 'POST',
+					body: FD
+				} );
 
-		MicroModal.show( 'afb-modal', {
-			debugMode: true,
-			disableScroll: true,
-			onShow: function( modal ) {
-				const inputTel = modal.querySelector( 'input[type=tel]' );
+				let result = await response.json();
 
-				VMasker( inputTel ).maskPattern( inputTel.dataset.mask );
+				modalWindow.classList.remove( 'preload' );
+				button.removeAttribute( 'disabled' );
 
-				triggerEvent( modal, 'open' );
-			},
-			onClose: function( modal ) {
+				if ( response.ok === false ) {
+					let arr = result.message;
 
-				triggerEvent( modal, 'close' );
+					for ( let key in arr ) {
+						let elEr = modalWindow.querySelector( 'label[for="' + key + '"]' );
 
-				modal.remove();
-
-			},
-			closeTrigger: 'data-afb-close',
-			disableFocus: false,
-			awaitCloseAnimation: true
-		} );
-
-		const modalWindow = document.querySelector( '.afb-modal__container' );
-		const modalWindowContent = document.querySelector( '.afb-modal__content' );
-		const form = document.querySelector( '.afb-modal-form' );
-		const button = document.querySelector( '.js-send-modal-form' );
-
-		form.addEventListener( 'submit', function( event ) {
-
-			event.preventDefault();
-
-			const FD = new FormData( form );
-			const url = form.getAttribute( 'action' );
-
-			button.setAttribute( 'disabled', 'disabled' );
-
-			modalWindow.classList.add( 'preload' );
-
-			(
-				async() => {
-					let response = await fetch( url, {
-						method: 'POST',
-						body: FD
-					} );
-
-					let result = await response.json();
-
-					modalWindow.classList.remove( 'preload' );
-					button.removeAttribute( 'disabled' );
-
-					if ( response.ok === false ) {
-						let arr = result.message;
-
-						for ( let key in arr ) {
-							let elEr = modalWindow.querySelector( 'label[for="' + key + '"]' );
-
-							if ( result.data.status === 405 ) {
-								elEr = form;
-							}
-
-							elEr.insertAdjacentHTML( 'beforeend', '<span class="error">' + arr[key] + '</span>' );
-
+						if ( result.data.status === 405 ) {
+							elEr = form;
 						}
 
-						setTimeout( function() {
-							let erMes = modalWindow.querySelectorAll( '.error' );
+						elEr.insertAdjacentHTML( 'beforeend', '<span class="error">' + arr[key] + '</span>' );
 
-							erMes.forEach( function( item, i, erMes ) {
-								item.remove();
-							} );
-						}, 5000 );
 					}
 
-					if ( result.status === 'success' ) {
+					setTimeout( function() {
+						let erMes = modalWindow.querySelectorAll( '.error' );
 
-						triggerEvent( form, 'send_success', result );
-
-						modalWindowContent.innerHTML = '';
-						modalWindowContent.insertAdjacentHTML( 'afterend',
-							'<span class="success">' + result.message + '</span>' );
-
-						setTimeout( function() {
-							MicroModal.close( 'afb-modal' );
-						}, 3000 );
-					}
-
+						erMes.forEach( function( item, i, erMes ) {
+							item.remove();
+						} );
+					}, 5000 );
 				}
-			)();
 
-		} );
+				if ( result.status === 'success' ) {
+
+					triggerEvent( form, 'send_success', result );
+
+					modalWindowContent.innerHTML = '';
+					modalWindowContent.insertAdjacentHTML( 'afterend',
+						'<span class="success">' + result.message + '</span>' );
+
+					setTimeout( function() {
+						MicroModal.close( 'afb-modal' );
+					}, 3000 );
+				}
+
+			}
+		)();
+
 	} );
+}
 
-} );
+
+function modalShow() {
+	MicroModal.show( 'afb-modal', {
+		debugMode: true,
+		disableScroll: true,
+		onShow: function( modal ) {
+			const inputTel = modal.querySelector( 'input[type=tel]' );
+
+			VMasker( inputTel ).maskPattern( inputTel.dataset.mask );
+
+			triggerEvent( modal, 'open' );
+		},
+		onClose: function( modal ) {
+
+			triggerEvent( modal, 'close' );
+
+			modal.remove();
+
+		},
+		closeTrigger: 'data-afb-close',
+		disableFocus: false,
+		awaitCloseAnimation: true
+	} );
+}
+
+
+document.querySelectorAll( '.button-shortcode-js' ).forEach( buttonShortcode =>
+	buttonShortcode.addEventListener( 'click', function( event ) {
+
+		let thisButton = event.target;
+		let url = thisButton.dataset.windowUrl;
+
+		let dataSend = {
+			emails: thisButton.dataset.afbEmails
+		};
+
+		this.setAttribute( 'disabled', 'disabled' );
+
+		viewModal( url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8'
+			},
+			body: JSON.stringify( dataSend )
+		} ).then( function( result ) {
+
+			document.body.insertAdjacentHTML( 'afterend', result.html );
+			thisButton.removeAttribute( 'disabled' );
+
+			modalShow();
+
+			const modalWindow = document.querySelector( '.afb-modal__container' );
+			const modalWindowContent = document.querySelector( '.afb-modal__content' );
+			const form = document.querySelector( '.afb-modal-form' );
+			const button = document.querySelector( '.js-send-modal-form' );
+
+			sendForm( form, button, modalWindow, modalWindowContent );
+		} );
+
+	} )
+);
+
+
 
 
