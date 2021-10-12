@@ -89,7 +89,7 @@ class Core {
 
 		wp_register_script(
 			'afb-script-shortcode',
-			AFB_PLUGIN_URI . 'assets/js/script-afb-shortcode.js',
+			AFB_PLUGIN_URI . 'assets/js/script-afb-shortcode.' . $this->suffix . 'js',
 			[ 'jquery', 'afb-script-modal', 'afb-script-mask' ],
 			AFB_PLUGIN_VER,
 			true

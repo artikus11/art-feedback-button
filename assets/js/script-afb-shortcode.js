@@ -1,6 +1,6 @@
 MicroModal.init();
 
-const triggerEvent = ( target, name, detail ) => {
+const AFB_triggerEvent = ( target, name, detail ) => {
 	const event = new CustomEvent( `afb_${ name }`, {
 		bubbles: true,
 		detail
@@ -14,7 +14,7 @@ const triggerEvent = ( target, name, detail ) => {
 };
 
 
-function viewModal( url, param ) {
+function AFB_viewModal( url, param ) {
 	const status = function( response ) {
 		if ( response.status !== 200 ) {
 			return Promise.reject( new Error( response.statusText ) );
@@ -40,7 +40,7 @@ function viewModal( url, param ) {
 }
 
 
-function sendForm( form, button, modalWindow, modalWindowContent ) {
+function AFB_sendForm( form, button, modalWindow, modalWindowContent ) {
 	form.addEventListener( 'submit', function( event ) {
 
 		event.preventDefault();
@@ -89,7 +89,7 @@ function sendForm( form, button, modalWindow, modalWindowContent ) {
 
 				if ( result.status === 'success' ) {
 
-					triggerEvent( form, 'send_success', result );
+					AFB_triggerEvent( form, 'send_success', result );
 
 					modalWindowContent.innerHTML = '';
 					modalWindowContent.insertAdjacentHTML( 'afterend',
@@ -107,7 +107,7 @@ function sendForm( form, button, modalWindow, modalWindowContent ) {
 }
 
 
-function modalShow() {
+function AFB_modalShow() {
 	MicroModal.show( 'afb-modal', {
 		debugMode: true,
 		disableScroll: true,
@@ -116,11 +116,11 @@ function modalShow() {
 
 			VMasker( inputTel ).maskPattern( inputTel.dataset.mask );
 
-			triggerEvent( modal, 'open' );
+			AFB_triggerEvent( modal, 'open' );
 		},
 		onClose: function( modal ) {
 
-			triggerEvent( modal, 'close' );
+			AFB_triggerEvent( modal, 'close' );
 
 			modal.remove();
 
@@ -132,7 +132,10 @@ function modalShow() {
 }
 
 
-document.querySelectorAll( '.button-shortcode-js' ).forEach( buttonShortcode =>
+const buttons = document.querySelectorAll( '.button-shortcode-js' );
+
+buttons.forEach( buttonShortcode =>
+
 	buttonShortcode.addEventListener( 'click', function( event ) {
 
 		let thisButton = event.target;
@@ -144,7 +147,7 @@ document.querySelectorAll( '.button-shortcode-js' ).forEach( buttonShortcode =>
 
 		this.setAttribute( 'disabled', 'disabled' );
 
-		viewModal( url, {
+		AFB_viewModal( url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8'
@@ -155,19 +158,15 @@ document.querySelectorAll( '.button-shortcode-js' ).forEach( buttonShortcode =>
 			document.body.insertAdjacentHTML( 'afterend', result.html );
 			thisButton.removeAttribute( 'disabled' );
 
-			modalShow();
+			AFB_modalShow();
 
 			const modalWindow = document.querySelector( '.afb-modal__container' );
 			const modalWindowContent = document.querySelector( '.afb-modal__content' );
 			const form = document.querySelector( '.afb-modal-form' );
 			const button = document.querySelector( '.js-send-modal-form' );
 
-			sendForm( form, button, modalWindow, modalWindowContent );
+			AFB_sendForm( form, button, modalWindow, modalWindowContent );
 		} );
 
 	} )
 );
-
-
-
-
