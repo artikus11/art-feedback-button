@@ -155,7 +155,7 @@ buttons.forEach( buttonShortcode =>
 			body: JSON.stringify( dataSend )
 		} ).then( function( result ) {
 
-			document.body.insertAdjacentHTML( 'afterend', result.html );
+			document.body.insertAdjacentHTML( 'beforeend', result.html );
 			thisButton.removeAttribute( 'disabled' );
 
 			AFB_modalShow();
