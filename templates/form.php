@@ -23,5 +23,9 @@
 		type="hidden"
 		value="<?php echo esc_attr( $args['emails'] ); ?>">
 
-	<button type="submit" class="afb-modal__btn afb-modal__btn-primary js-send-modal-form"><?php apply_filters( 'afb_submit_button_label', 'Отправить' ); ?></button>
+	<button
+		type="submit"
+		class="afb-modal__btn afb-modal__btn-primary js-send-modal-form">
+		<?php echo apply_filters( 'afb_submit_button_label', 'Отправить' ); ?>
+	</button>
 </form>
