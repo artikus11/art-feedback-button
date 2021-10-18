@@ -81,7 +81,7 @@ class Rest {
 
 		return [
 			'status'  => 'success',
-			'message' => 'Сообщение успешно отправлено.',
+			'message' => apply_filters( 'afb_message_success', 'Сообщение успешно отправлено.' ),
 		];
 	}
 
