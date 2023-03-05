@@ -1,3 +1,7 @@
+import MicroModal from 'micromodal';
+import VMasker from 'vanilla-masker';
+
+
 MicroModal.init();
 
 const AFB_triggerEvent = ( target, name, detail ) => {
@@ -15,18 +19,18 @@ const AFB_triggerEvent = ( target, name, detail ) => {
 
 
 function AFB_viewModal( url, param ) {
-	const status = function( response ) {
+	const status = function ( response ) {
 		if ( response.status !== 200 ) {
 			return Promise.reject( new Error( response.statusText ) );
 		}
 		return Promise.resolve( response );
 	};
 
-	const json = function( response ) {
+	const json = function ( response ) {
 		return response.json();
 	};
 
-	let html = function( data ) {
+	let html = function ( data ) {
 		return data;
 	};
 
@@ -34,18 +38,18 @@ function AFB_viewModal( url, param ) {
 		.then( status )
 		.then( json )
 		.then( html )
-		.catch( function( error ) {
+		.catch( function ( error ) {
 			console.log( 'error', error );
 		} );
 }
 
 
 function AFB_sendForm( form, button, modalWindow, modalWindowContent ) {
-	form.addEventListener( 'submit', function( event ) {
+	form.addEventListener( 'submit', function ( event ) {
 
 		event.preventDefault();
 
-		const FD = new FormData( form );
+		const FD  = new FormData( form );
 		const url = form.getAttribute( 'action' );
 
 		button.setAttribute( 'disabled', 'disabled' );
@@ -53,10 +57,10 @@ function AFB_sendForm( form, button, modalWindow, modalWindowContent ) {
 		modalWindow.classList.add( 'preload' );
 
 		(
-			async() => {
+			async () => {
 				let response = await fetch( url, {
 					method: 'POST',
-					body: FD
+					body:   FD
 				} );
 
 				let result = await response.json();
@@ -74,14 +78,14 @@ function AFB_sendForm( form, button, modalWindow, modalWindowContent ) {
 							elEr = form;
 						}
 
-						elEr.insertAdjacentHTML( 'beforeend', '<span class="error">' + arr[key] + '</span>' );
+						elEr.insertAdjacentHTML( 'beforeend', '<span class="error">' + arr[ key ] + '</span>' );
 
 					}
 
-					setTimeout( function() {
+					setTimeout( function () {
 						let erMes = modalWindow.querySelectorAll( '.error' );
 
-						erMes.forEach( function( item, i, erMes ) {
+						erMes.forEach( function ( item, i, erMes ) {
 							item.remove();
 						} );
 					}, 5000 );
@@ -95,7 +99,7 @@ function AFB_sendForm( form, button, modalWindow, modalWindowContent ) {
 					modalWindowContent.insertAdjacentHTML( 'afterend',
 						'<span class="success">' + result.message + '</span>' );
 
-					setTimeout( function() {
+					setTimeout( function () {
 						MicroModal.close( 'afb-modal' );
 					}, 3000 );
 				}
@@ -109,24 +113,24 @@ function AFB_sendForm( form, button, modalWindow, modalWindowContent ) {
 
 function AFB_modalShow() {
 	MicroModal.show( 'afb-modal', {
-		debugMode: true,
-		disableScroll: true,
-		onShow: function( modal ) {
+		debugMode:           true,
+		disableScroll:       true,
+		onShow:              function ( modal ) {
 			const inputTel = modal.querySelector( 'input[type=tel]' );
 
 			VMasker( inputTel ).maskPattern( inputTel.dataset.mask );
 
 			AFB_triggerEvent( modal, 'open' );
 		},
-		onClose: function( modal ) {
+		onClose:             function ( modal ) {
 
 			AFB_triggerEvent( modal, 'close' );
 
 			modal.remove();
 
 		},
-		closeTrigger: 'data-afb-close',
-		disableFocus: false,
+		closeTrigger:        'data-afb-close',
+		disableFocus:        false,
 		awaitCloseAnimation: true
 	} );
 }
@@ -136,10 +140,10 @@ const buttons = document.querySelectorAll( '.button-shortcode-js' );
 
 buttons.forEach( buttonShortcode =>
 
-	buttonShortcode.addEventListener( 'click', function( event ) {
+	buttonShortcode.addEventListener( 'click', function ( event ) {
 
 		let thisButton = event.target;
-		let url = thisButton.dataset.windowUrl;
+		let url        = thisButton.dataset.windowUrl;
 
 		let dataSend = {
 			emails: thisButton.dataset.afbEmails
@@ -148,22 +152,22 @@ buttons.forEach( buttonShortcode =>
 		this.setAttribute( 'disabled', 'disabled' );
 
 		AFB_viewModal( url, {
-			method: 'POST',
+			method:  'POST',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8'
 			},
-			body: JSON.stringify( dataSend )
-		} ).then( function( result ) {
+			body:    JSON.stringify( dataSend )
+		} ).then( function ( result ) {
 
 			document.body.insertAdjacentHTML( 'beforeend', result.html );
 			thisButton.removeAttribute( 'disabled' );
 
 			AFB_modalShow();
 
-			const modalWindow = document.querySelector( '.afb-modal__container' );
+			const modalWindow        = document.querySelector( '.afb-modal__container' );
 			const modalWindowContent = document.querySelector( '.afb-modal__content' );
-			const form = document.querySelector( '.afb-modal-form' );
-			const button = document.querySelector( '.js-send-modal-form' );
+			const form               = document.querySelector( '.afb-modal-form' );
+			const button             = document.querySelector( '.js-send-modal-form' );
 
 			AFB_sendForm( form, button, modalWindow, modalWindowContent );
 		} );

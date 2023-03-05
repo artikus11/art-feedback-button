@@ -1,0 +1,56 @@
+{
+  "name": "art-feedback-button",
+  "description": "Плагин обратного звонка. Выводит шорткодом кнопку обратного звонка.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --watch --mode development --progress",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress",
+    "start:open": "cross-env NODE_ENV=development webpack-dev-server --open",
+    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "build:unminification": "cross-env NODE_ENV=development webpack",
+    "build:custom": "wp-scripts build woocommerce.js main.js",
+    "start": "wp-scripts start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artikus11/art-woocommerce-order-fast.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artikus11/art-woocommerce-order-fast/issues"
+  },
+  "homepage": "https://github.com/artikus11/art-woocommerce-order-fast#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "^6.2.0",
+    "autoprefixer": "^10.4.2",
+    "copy-webpack-plugin": "^10.2.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.4.1",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^5.0.16",
+    "glob": "^7.2.0",
+    "mini-css-extract-plugin": "^2.5.3",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "postcss-loader": "^6.2.1",
+    "postcss-preset-env": "^7.2.3",
+    "sass": "^1.49.0",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "svg-sprite-loader": "^6.0.11",
+    "svgo-loader": "^3.0.0",
+    "terser-webpack-plugin": "^5.3.0",
+    "thread-loader": "^3.0.4",
+    "unminified-webpack-plugin": "^3.0.0",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "jquery-mask-plugin": "^1.14.16",
+    "micromodal": "^0.4.10",
+    "vanilla-masker": "^1.2.0"
+  }
+}
