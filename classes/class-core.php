@@ -36,7 +36,7 @@ class Core {
 	 */
 	protected function __construct() {
 
-		( new Rest )->setup_hooks();
+		( new Rest( $this ) )->setup_hooks();
 		( new Shortcode )->setup_hooks();
 		( new Enqueue() )->setup_hooks();
 

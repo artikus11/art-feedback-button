@@ -7,10 +7,20 @@ use WP_REST_Request;
 
 class Rest {
 
+	protected Core $core;
+
+
+	public function __construct( $core ) {
+
+		$this->core = $core;
+	}
+
+
 	public function setup_hooks(): void {
 
 		add_action( 'rest_api_init', [ $this, 'route' ] );
 	}
+
 
 	public function route(): void {
 
@@ -35,6 +45,7 @@ class Rest {
 		);
 	}
 
+
 	/**
 	 * @param  WP_REST_Request $request
 	 *
@@ -58,6 +69,7 @@ class Rest {
 		];
 	}
 
+
 	/**
 	 * @param  WP_REST_Request $request
 	 *
@@ -76,14 +88,19 @@ class Rest {
 		$send = $this->send( $fields );
 
 		if ( ! $send ) {
+			do_action( 'afb_error_send_mail', $this->email_fields( $fields ) );
+
 			return new WP_Error( 'error', 'Что-то пошло не так', [ 'status' => 405 ] );
 		}
+
+		do_action( 'afb_send_mail', $this->email_fields( $fields ) );
 
 		return [
 			'status'  => 'success',
 			'message' => apply_filters( 'afb_message_success', 'Сообщение успешно отправлено.' ),
 		];
 	}
+
 
 	/**
 	 * @param $fields
@@ -103,7 +120,7 @@ class Rest {
 		ob_start();
 
 		load_template(
-			afb()->get_template( 'email.php' ),
+			$this->core->get_template( 'email.php' ),
 			false,
 			[
 				'fields' => $email_content,
@@ -116,6 +133,7 @@ class Rest {
 
 		return $this->wp_mail( $email_to, $subject, $content );
 	}
+
 
 	/**
 	 * @param  string|[] $to
@@ -134,9 +152,10 @@ class Rest {
 		return wp_mail( $to, $subject, $message, $headers );
 	}
 
+
 	public function validation( $fields ): array {
 
-		$fields_default = afb()->fields->get_form_fields();
+		$fields_default = $this->core->fields->get_form_fields();
 
 		$errors   = [];
 		$required = [];
@@ -161,6 +180,7 @@ class Rest {
 		return $errors;
 	}
 
+
 	/**
 	 * @param $fields
 	 *
@@ -168,7 +188,7 @@ class Rest {
 	 */
 	protected function email_fields( $fields ): array {
 
-		$fields_default = afb()->fields->get_form_fields();
+		$fields_default = $this->core->fields->get_form_fields();
 
 		$email_fields  = [];
 		$email_content = [];
