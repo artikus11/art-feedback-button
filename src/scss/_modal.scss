@@ -92,7 +92,10 @@
 
   &:hover {
     cursor: pointer;
-    color: #111;
+    color: #000;
+    background: transparent;
+    box-shadow: none;
+    border: none;
   }
 
   &:focus {
