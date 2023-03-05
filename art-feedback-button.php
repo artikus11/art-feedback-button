@@ -39,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 const AFB_PLUGIN_DIR = __DIR__;
+const AFB_PLUGIN_AFILE = __FILE__;
 define( 'AFB_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
 define( 'AFB_PLUGIN_FILE', plugin_basename( __FILE__ ) );
 

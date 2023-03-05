@@ -44,17 +44,11 @@ class Core {
 	/**
 	 * Construct.
 	 */
-	public function __construct() {
-
-		$this->suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : 'min.';
+	protected function __construct() {
 
 		$this->setup_hooks();
 
-		$this->rest = new Rest;
-		$this->rest->setup_hooks();
-
-		$this->shortcode = new Shortcode;
-		$this->shortcode->setup_hooks();
+		$this->updater_init();
 
 		$this->fields = new Fields();
 	}
@@ -140,28 +134,16 @@ class Core {
 		return apply_filters( 'afb_template_path', 'art-feedback-button/' );
 	}
 
+	private function updater_init(): void {
 
-	/**
-	 * @param  string $template_name
-	 *
-	 * @return string
-	 */
-	public function get_template( string $template_name ): string {
-
-		$template_path = locate_template( afb()->template_path() . $template_name );
-
-		if ( ! $template_path ) {
-			$template_path = sprintf( "%s/templates/%s", afb()->plugin_path(), $template_name );
-		}
-
-		return apply_filters( 'afb_locate_template', $template_path );
+		$updater = new Updater( AFB_PLUGIN_AFILE );
+		$updater->set_repository( 'art-feedback-button' );
+		$updater->set_username( 'artikus11' );
+		$updater->set_authorize( 'Z2hwX3FmOHVsOXJVV2pSaVFUVjd3MXVybkpVbWNVT3VCbzBNV0ZCWA==' );
+		$updater->init();
 	}
-
-
 	/**
 	 * Instance.
-	 * An global instance of the class. Used to retrieve the instance
-	 * to use on other files/plugins/themes.
 	 *
 	 * @return object Instance of the class.
 	 * @since 1.8.0
