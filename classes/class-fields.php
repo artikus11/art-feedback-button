@@ -157,6 +157,7 @@ class Fields {
 		return $field;
 	}
 
+
 	/**
 	 * @param         $args
 	 * @param         $key
@@ -181,6 +182,7 @@ class Fields {
 		);
 
 	}
+
 
 	/**
 	 * @param        $args
@@ -228,6 +230,7 @@ class Fields {
 		return [ $field, $args ];
 	}
 
+
 	/**
 	 * @param         $args
 	 * @param  string $label_id
@@ -271,6 +274,7 @@ class Fields {
 		return [ $label_id, $args, $field ];
 	}
 
+
 	/**
 	 * @param         $key
 	 * @param         $args
@@ -297,6 +301,7 @@ class Fields {
 		return [ $args, $field ];
 	}
 
+
 	/**
 	 * @param         $args
 	 * @param  array  $custom_attributes
@@ -322,31 +327,35 @@ class Fields {
 		);
 	}
 
+
 	public function get_form_fields(): array {
 
 		return apply_filters(
 			'afb_form_fields',
 			[
 				'afb-name'  => [
-					'type'        => 'text',
-					'label'       => 'Ваше имя',
-					'placeholder' => 'Ваше имя',
-					'required'    => true,
-					'notice'      => 'Это обязательное поле. Укажите Имя',
-					'email_label' => 'Имя',
+					'type'         => 'text',
+					'label'        => 'Ваше имя',
+					'placeholder'  => 'Ваше имя',
+					'autocomplete' => false,
+					'required'     => true,
+					'notice'       => 'Это обязательное поле. Укажите Имя',
+					'email_label'  => 'Имя',
 				],
 				'afb-email' => [
-					'type'        => 'email',
-					'label'       => 'Ваш email',
-					'placeholder' => 'info@mail.com',
-					'required'    => true,
-					'notice'      => 'Это обязательное поле. Укажите E-mail',
-					'email_label' => 'E-mail',
+					'type'         => 'email',
+					'label'        => 'Ваш email',
+					'placeholder'  => 'info@mail.com',
+					'autocomplete' => false,
+					'required'     => true,
+					'notice'       => 'Это обязательное поле. Укажите E-mail',
+					'email_label'  => 'E-mail',
 				],
 				'afb-phone' => [
 					'type'              => 'tel',
 					'label'             => 'Ваш телефон',
 					'placeholder'       => '7 (999) 999-99-99',
+					'autocomplete'      => false,
 					'required'          => true,
 					'notice'            => 'Это обязательное поле. Укажите Телефон',
 					'email_label'       => 'Телефон',
