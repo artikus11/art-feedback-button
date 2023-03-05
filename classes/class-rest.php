@@ -88,12 +88,12 @@ class Rest {
 		$send = $this->send( $fields );
 
 		if ( ! $send ) {
-			do_action( 'afb_error_send_mail', $this->email_fields( $fields ) );
+			do_action( 'afb_error_send_mail', $fields );
 
 			return new WP_Error( 'error', 'Что-то пошло не так', [ 'status' => 405 ] );
 		}
 
-		do_action( 'afb_send_mail', $this->email_fields( $fields ) );
+		do_action( 'afb_send_mail', $fields );
 
 		return [
 			'status'  => 'success',
