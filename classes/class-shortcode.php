@@ -17,10 +17,8 @@ class Shortcode {
 	 */
 	public function button( $atts ) {
 
-		wp_enqueue_style( 'afb-style-shortcode' );
-		wp_enqueue_script( 'afb-script-shortcode' );
-		wp_enqueue_script( 'afb-script-modal' );
-		wp_enqueue_script( 'afb-script-mask' );
+		wp_enqueue_style( 'afb-styles' );
+		wp_enqueue_script( 'afb-scripts' );
 
 		$atts = shortcode_atts(
 			[
