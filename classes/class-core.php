@@ -18,22 +18,12 @@ class Core {
 	 * @since  1.0.0
 	 * @access private
 	 */
-	private static ?object $instance = null;
+	private static ?Core $instance = null;
 
 	/**
-	 * @var string
+	 * @var \ART\AFB\Templater
 	 */
-	private string $suffix;
-
-	/**
-	 * @var \ART\AFB\Rest
-	 */
-	protected Rest $rest;
-
-	/**
-	 * @var \ART\AFB\Shortcode
-	 */
-	protected Shortcode $shortcode;
+	protected Templater $template;
 
 	/**
 	 * @var \ART\AFB\Fields
@@ -46,92 +36,25 @@ class Core {
 	 */
 	protected function __construct() {
 
-		$this->setup_hooks();
+		( new Rest )->setup_hooks();
+		( new Shortcode )->setup_hooks();
+		( new Enqueue() )->setup_hooks();
 
 		$this->updater_init();
 
-		$this->fields = new Fields();
+		$this->fields   = new Fields();
+		$this->template = new Templater();
 	}
 
 
 	/**
-	 * Init.
-	 * Initialize plugin parts.
+	 * @param $template_name
 	 *
-	 * @since 1.8.0
-	 */
-	public function setup_hooks(): void {
-
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue' ] );
-
-	}
-
-
-	/**
-	 * Подключeние стилей и скриптов
-	 *
-	 * @return void
-	 */
-	public function enqueue(): void {
-
-		wp_register_style(
-			'afb-style-shortcode',
-			AFB_PLUGIN_URI . 'assets/css/style-afb-shortcode.' . $this->suffix . 'css',
-			[],
-			AFB_PLUGIN_VER
-		);
-
-		wp_register_script(
-			'afb-script-shortcode',
-			AFB_PLUGIN_URI . 'assets/js/script-afb-shortcode.' . $this->suffix . 'js',
-			[ 'jquery', 'afb-script-modal', 'afb-script-mask' ],
-			AFB_PLUGIN_VER,
-			true
-		);
-
-		wp_register_script(
-			'afb-script-modal',
-			AFB_PLUGIN_URI . 'assets/js/micromodal.' . $this->suffix . 'js',
-			[ 'jquery' ],
-			AFB_PLUGIN_VER,
-			true
-		);
-
-		wp_register_script(
-			'afb-script-mask',
-			AFB_PLUGIN_URI . 'assets/js/vanilla-masker.' . $this->suffix . 'js',
-			[ 'jquery' ],
-			AFB_PLUGIN_VER,
-			true
-		);
-
-	}
-
-
-	/**
 	 * @return string
 	 */
-	public function plugin_url(): string {
+	public function get_template( $template_name ): string {
 
-		return untrailingslashit( plugins_url( '/', AFB_PLUGIN_FILE ) );
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function plugin_path(): string {
-
-		return untrailingslashit( AFB_PLUGIN_DIR );
-	}
-
-
-	/**
-	 * @return string
-	 */
-	public function template_path(): string {
-
-		return apply_filters( 'afb_template_path', 'art-feedback-button/' );
+		return $this->template->get_template( $template_name );
 	}
 
 	private function updater_init(): void {
