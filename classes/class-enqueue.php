@@ -33,14 +33,14 @@ class Enqueue {
 	public function enqueue(): void {
 		wp_register_style(
 			'afb-styles',
-			AFB_PLUGIN_URI . 'assets/css/afb-styles.' . $this->suffix . 'css',
+			AFB_PLUGIN_URI . 'assets/css/afb-styles' . $this->suffix . '.css',
 			[],
 			AFB_PLUGIN_VER
 		);
 
 		wp_register_script(
 			'afb-scripts',
-			AFB_PLUGIN_URI . 'assets/js/afb-scripts.' . $this->suffix . 'js',
+			AFB_PLUGIN_URI . 'assets/js/afb-scripts' . $this->suffix . '.js',
 			[ 'jquery' ],
 			AFB_PLUGIN_VER,
 			true
