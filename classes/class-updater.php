@@ -11,7 +11,6 @@ namespace ART\AFB;
  * @see     https://www.smashingmagazine.com/2015/08/deploy-wordpress-plugins-with-github-using-transients/
  * @see     https://github.com/MilesS/smashing-updater-plugin
  *
- * @package art-selection-autoparts
  */
 class Updater {
 
@@ -23,12 +22,12 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private ?array $plugin = null;
+	private array $plugin = [];
 
 	/**
 	 * @var string|null
 	 */
-	private ?string $basename = null;
+	private string $basename = '';
 
 	/**
 	 * @var bool
@@ -53,7 +52,7 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private ?array $github_response = null;
+	private array $github_response = [];
 
 
 	public function __construct( $file ) {
@@ -110,7 +109,7 @@ class Updater {
 
 		$args = [];
 
-		if ( is_null( $this->github_response ) ) {
+		if ( empty( $this->github_response ) ) {
 
 			$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
 
@@ -173,33 +172,30 @@ class Updater {
 	 */
 	public function modify_transient( $transient ) {
 
-		if ( ! property_exists( $transient, 'checked' ) || is_null( property_exists( $transient, 'checked' ) ) ) {
+		if ( ! property_exists( $transient, 'checked' ) ) {
 			return $transient;
 		}
 
 		$checked = $transient->checked;
 
-		if ( $checked ) {
+		if ( ! $checked ) {
+			return $transient;
+		}
 
-			$this->get_repository_data();
+		$this->get_repository_data();
 
-			$out_of_date = version_compare( $this->github_response['tag_name'], $checked[ $this->basename ], 'gt' );
+		$out_of_date = version_compare( $this->github_response['tag_name'], $checked[ $this->basename ], 'gt' );
 
-			if ( $out_of_date ) {
+		if ( $out_of_date ) {
 
-				$new_files = $this->github_response['download_link'];
+			$plugin = [
+				'url'         => $this->plugin["PluginURI"],
+				'slug'        => current( explode( '/', $this->basename ) ),
+				'package'     => $this->github_response['download_link'],
+				'new_version' => $this->github_response['tag_name'],
+			];
 
-				$slug = current( explode( '/', $this->basename ) );
-
-				$plugin = [
-					'url'         => $this->plugin["PluginURI"],
-					'slug'        => $slug,
-					'package'     => $new_files,
-					'new_version' => $this->github_response['tag_name'],
-				];
-
-				$transient->response[ $this->basename ] = (object) $plugin;
-			}
+			$transient->response[ $this->basename ] = (object) $plugin;
 		}
 
 		return $transient;
