@@ -172,26 +172,34 @@ class Updater {
 	 */
 	public function modify_transient( $transient ) {
 
-		if ( ! property_exists( $transient, 'checked' ) ) {
+		if ( empty( property_exists( $transient, 'checked' ) ) ) {
 			return $transient;
 		}
 
 		$checked = $transient->checked;
 
-		if ( ! $checked ) {
+		if ( empty( $checked ) ) {
 			return $transient;
 		}
 
 		$this->get_repository_data();
 
+		if ( empty( $this->github_response ) ) {
+			return $transient;
+		}
+
 		$out_of_date = version_compare( $this->github_response['tag_name'], $checked[ $this->basename ], 'gt' );
 
 		if ( $out_of_date ) {
 
+			$new_files = $this->github_response['download_link'];
+
+			$slug = current( explode( '/', $this->basename ) );
+
 			$plugin = [
 				'url'         => $this->plugin["PluginURI"],
-				'slug'        => current( explode( '/', $this->basename ) ),
-				'package'     => $this->github_response['download_link'],
+				'slug'        => $slug,
+				'package'     => $new_files,
 				'new_version' => $this->github_response['tag_name'],
 			];
 
