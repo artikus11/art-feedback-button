@@ -11,7 +11,6 @@ namespace ART\AFB;
  * @see     https://www.smashingmagazine.com/2015/08/deploy-wordpress-plugins-with-github-using-transients/
  * @see     https://github.com/MilesS/smashing-updater-plugin
  *
- * @package art-selection-autoparts
  */
 class Updater {
 
@@ -23,12 +22,12 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private ?array $plugin = null;
+	private array $plugin = [];
 
 	/**
 	 * @var string|null
 	 */
-	private ?string $basename = null;
+	private string $basename = '';
 
 	/**
 	 * @var bool
@@ -53,7 +52,7 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private ?array $github_response = null;
+	private array $github_response = [];
 
 
 	public function __construct( $file ) {
@@ -105,13 +104,12 @@ class Updater {
 
 	/**
 	 *
-	 * @throws \JsonException
 	 */
 	private function get_repository_data(): void {
 
 		$args = [];
 
-		if ( is_null( $this->github_response ) ) {
+		if ( empty( $this->github_response ) ) {
 
 			$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
 
@@ -126,18 +124,23 @@ class Updater {
 			$response = [];
 
 			if ( ! is_wp_error( $request ) ) {
-				$response = json_decode( wp_remote_retrieve_body( $request ), true, 512, JSON_THROW_ON_ERROR );
+				try {
+					$response = json_decode( wp_remote_retrieve_body( $request ), true, 512, JSON_THROW_ON_ERROR );
+				} catch ( \JsonException $e ) {
+				}
 			}
 
 			if ( is_array( $response ) ) {
-				$response = current( $response );
-			}
+				$assets = current( $response['assets'] );
 
-			if ( $this->authorize_token ) {
-				$response['zipball_url'] = add_query_arg( 'access_token', $this->authorize_token, $response['zipball_url'] );
+				$this->github_response = [
+					'tag_name'      => $response['tag_name'],
+					'downloaded'    => $assets['download_count'],
+					'updates'       => $response['body'],
+					'last_updated'  => $response['published_at'],
+					'download_link' => $assets['browser_download_url'],
+				];
 			}
-
-			$this->github_response = $response;
 
 		}
 	}
@@ -163,51 +166,56 @@ class Updater {
 		);
 	}
 
+
 	/**
-	 * @throws \JsonException
+	 *
 	 */
 	public function modify_transient( $transient ) {
 
-		if ( ! property_exists( $transient, 'checked' ) || is_null( property_exists( $transient, 'checked' ) ) ) {
+		if ( empty( property_exists( $transient, 'checked' ) ) ) {
 			return $transient;
 		}
 
 		$checked = $transient->checked;
 
-		if ( $checked ) {
+		if ( empty( $checked ) ) {
+			return $transient;
+		}
 
-			$this->get_repository_data();
+		$this->get_repository_data();
 
-			$out_of_date = version_compare( $this->github_response['tag_name'], $checked[ $this->basename ], 'gt' );
+		if ( empty( $this->github_response ) ) {
+			return $transient;
+		}
 
-			if ( $out_of_date ) {
+		$out_of_date = version_compare( $this->github_response['tag_name'], $checked[ $this->basename ], 'gt' );
 
-				$new_files = $this->github_response['zipball_url'];
+		if ( $out_of_date ) {
 
-				$slug = current( explode( '/', $this->basename ) );
+			$new_files = $this->github_response['download_link'];
 
-				$plugin = [
-					'url'         => $this->plugin["PluginURI"],
-					'slug'        => $slug,
-					'package'     => $new_files,
-					'new_version' => $this->github_response['tag_name'],
-				];
+			$slug = current( explode( '/', $this->basename ) );
 
-				$transient->response[ $this->basename ] = (object) $plugin;
-			}
+			$plugin = [
+				'url'         => $this->plugin["PluginURI"],
+				'slug'        => $slug,
+				'package'     => $new_files,
+				'new_version' => $this->github_response['tag_name'],
+			];
+
+			$transient->response[ $this->basename ] = (object) $plugin;
 		}
 
 		return $transient;
 	}
 
 
+	/**
+	 *
+	 */
 	public function plugin_popup( $result, $action, $args ) {
 
-		if ( ! empty( $args->slug ) ) {
-			return $result;
-		}
-
-		if ( $args->slug === current( explode( '/', $this->basename ) ) ) {
+		if ( ! empty( $args->slug ) && $args->slug === current( explode( '/', $this->basename ) ) ) {
 
 			$this->get_repository_data();
 
@@ -215,7 +223,7 @@ class Updater {
 				'name'              => $this->plugin["Name"],
 				'slug'              => $this->basename,
 				'requires'          => '5.5',
-				'tested'            => '5.6',
+				'tested'            => '6.1',
 				'rating'            => '100.0',
 				'num_ratings'       => '1',
 				'downloaded'        => '2',
@@ -223,14 +231,14 @@ class Updater {
 				'version'           => $this->github_response['tag_name'],
 				'author'            => $this->plugin["AuthorName"],
 				'author_profile'    => $this->plugin["AuthorURI"],
-				'last_updated'      => $this->github_response['published_at'],
+				'last_updated'      => $this->github_response['last_updated'],
 				'homepage'          => $this->plugin["PluginURI"],
 				'short_description' => $this->plugin["Description"],
 				'sections'          => [
 					'Description' => $this->plugin["Description"],
-					'Updates'     => $this->github_response['body'],
+					'Updates'     => $this->github_response['updates'],
 				],
-				'download_link'     => $this->github_response['zipball_url'],
+				'download_link'     => $this->github_response['download_link'],
 			];
 
 			return (object) $plugin;

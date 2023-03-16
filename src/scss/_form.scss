@@ -54,12 +54,12 @@
   animation-delay: 1s;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.4);
   box-sizing: border-box;
-}
 
-.alert-success {
-  background-color: #4CAF50;
-}
+  &-success {
+    background-color: #4CAF50;
+  }
 
-.alert-danger {
-  background-color: #F44336;
+  &-danger {
+    background-color: #F44336;
+  }
 }

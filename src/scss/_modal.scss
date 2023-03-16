@@ -6,134 +6,136 @@
   .modal__overlay {
     will-change: transform;
   }
-}
 
-
-.afb-modal.is-open {
-  display: block;
-}
-
-.afb-modal[aria-hidden="false"] {
-  .afb-modal__overlay {
-    animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  &.is-open {
+    display: block;
   }
 
-  .afb-modal__container {
-    animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
-  }
-}
+  &[aria-hidden="false"] {
+    .afb-modal__overlay {
+      animation: mmfadeIn .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    }
 
-.afb-modal[aria-hidden="true"] {
-  .afb-modal__overlay {
-    animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
-  }
-
-  .afb-modal__container {
-    animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
+    .afb-modal__container {
+      animation: mmslideIn .3s cubic-bezier(0, 0, .2, 1);
+    }
   }
 
-}
+  &[aria-hidden="true"] {
+    .afb-modal__overlay {
+      animation: mmfadeOut .3s cubic-bezier(0.0, 0.0, 0.2, 1);
+    }
 
-.afb-modal__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 200;
-}
+    .afb-modal__container {
+      animation: mmslideOut .3s cubic-bezier(0, 0, .2, 1);
+    }
 
-.afb-modal__container {
-  position: relative;
-  background-color: #fff;
-  color: #111;
-  padding: 30px;
-  max-width: 600px;
-  width: 100%;
-  max-height: 100vh;
-  border-radius: 4px;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
+  }
 
-.afb-modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.afb-modal__title {
-  margin: 0 auto;
-  line-height: 1.25;
-  box-sizing: border-box;
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 1.5rem;
-  font-family: inherit;
-}
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+  }
 
-.afb-modal__close {
-  background: transparent;
-  border: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  line-height: 1;
-  color: #606060;
-
-  &:hover {
-    cursor: pointer;
+  &__container {
+    position: relative;
+    background-color: #fff;
     color: #111;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 4px;
+    overflow-y: auto;
+    box-sizing: border-box;
   }
 
-  &:focus {
-    outline: none;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-}
 
-.afb-modal__content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
-  color: rgba(0, 0, 0, .8);
-}
+  &__title {
+    margin: 0 auto;
+    line-height: 1.25;
+    box-sizing: border-box;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: inherit;
+  }
 
-.afb-modal__btn {
-  display: block;
-  width: 100%;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 1rem 1.5rem;
-  border-radius: 0.25rem;
-  border-style: none;
-  border-width: 0;
-  cursor: pointer;
-  line-height: 1;
-  margin: 10px 0 0 0;
+  &__close {
+    background: transparent;
+    border: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    line-height: 1;
+    color: #606060;
 
-  &:focus,
-  &:hover {
+    &:hover {
+      cursor: pointer;
+      color: #000;
+      background: transparent;
+      box-shadow: none;
+      border: none;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+
+  &__content {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, .8);
+  }
+
+  &__btn {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 1rem 1.5rem;
+    border-radius: 0.25rem;
+    border-style: none;
+    border-width: 0;
     cursor: pointer;
-    opacity: 0.9;
+    line-height: 1;
+    margin: 10px 0 0 0;
+
+    &:focus,
+    &:hover {
+      cursor: pointer;
+      opacity: 0.9;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 
-  &:focus {
-    outline: none;
-  }
-}
-
-.afb-modal__btn-primary {
-
-
+  &__btn-primary {}
 }
 
 

@@ -4,7 +4,7 @@ Donate link: https://wpruse.ru/r/donat/
 Tags: woocommerce, mode catalog
 Requires at least: 5.5
 Tested up to: 5.6
-Stable tag: 1.3.0
+Stable tag: 1.4.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,6 +31,9 @@ e.g.
 == Screenshots ==
 
 == Changelog ==
+= 1.4.1 =
+* Исправлено: рефакторинг функционала обновлений
+
 = 1.4.0 =
 * Добавлено: автоматическое обновление
 * Добавлено: хук успешной отправки формы `afb_send_mail`
