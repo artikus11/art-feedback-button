@@ -49,8 +49,7 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "jquery-mask-plugin": "^1.14.16",
     "micromodal": "^0.4.10",
-    "vanilla-masker": "^1.2.0"
+    "jquery-mask-plugin": "^1.14.16"
   }
 }

@@ -21,8 +21,8 @@ module.exports = {
 	entry:        {
 		"afb-scripts": path.resolve( process.cwd(), 'src/js', 'afb-scripts.js' ),
 		//"jquery.mask":  path.resolve( process.cwd(), 'node_modules/jquery-mask-plugin/dist', 'jquery.mask.js' ),
+		//"micromodal":  path.resolve( process.cwd(), 'node_modules/micromodal/dist', 'micromodal.js' ),
 		"afb-styles":  path.resolve( process.cwd(), 'src/scss', 'afb-styles.scss' ),
-		//"awof-admin-styles":   path.resolve( process.cwd(), 'src/scss', 'awof-admin-styles.scss' ),
 	},
 	output:       {
 		filename: filename( 'js' ),

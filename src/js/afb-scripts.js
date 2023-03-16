@@ -1,5 +1,5 @@
 import MicroModal from 'micromodal';
-import VMasker from 'vanilla-masker';
+import 'jquery-mask-plugin';
 
 
 MicroModal.init();
@@ -118,7 +118,20 @@ function AFB_modalShow() {
 		onShow:              function ( modal ) {
 			const inputTel = modal.querySelector( 'input[type=tel]' );
 
-			VMasker( inputTel ).maskPattern( inputTel.dataset.mask );
+			jQuery( inputTel ).mask( inputTel.dataset.mask,
+				{
+					placeholder: jQuery( inputTel ).attr( 'placeholder' ),
+					byPassKeys:  [ 9, 16, 17, 18, 36, 37, 38, 39, 40, 91 ],
+					translation: {
+						'0': { pattern: /\d/ },
+						'9': { pattern: /\d/, optional: true },
+						'#': { pattern: /\d/, recursive: true },
+						'A': { pattern: /[a-zA-Z0-9]/ },
+						'S': { pattern: /[a-zA-Z]/ },
+						'r': { pattern: /[9]/ }
+					}
+				}
+			)
 
 			AFB_triggerEvent( modal, 'open' );
 		},

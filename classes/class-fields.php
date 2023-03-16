@@ -360,7 +360,7 @@ class Fields {
 					'notice'            => 'Это обязательное поле. Укажите Телефон',
 					'email_label'       => 'Телефон',
 					'custom_attributes' => [
-						'data-mask' => '+7 (999) 999-99-99',
+						'data-mask' => '+7 (r00) 000-00-00',
 					],
 				],
 			]
