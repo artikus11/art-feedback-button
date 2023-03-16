@@ -112,6 +112,9 @@ class Updater {
 		if ( is_null( $this->github_response ) ) {
 
 			$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
+			$changelog   = file_get_contents(
+				sprintf( 'https://raw.githubusercontent.com/%s/%s//master/CHANGELOG.md', $this->username, $this->repository )
+			);
 
 			if ( $this->authorize_token ) {
 				$args ['headers'] = [
@@ -136,7 +139,7 @@ class Updater {
 				$this->github_response = [
 					'tag_name'      => $response['tag_name'],
 					'downloaded'    => $assets['download_count'],
-					'updates'       => $response['body'],
+					'updates'       => '<pre style="border:none;width: 100%;word-break: break-all;white-space: pre;">' . $changelog . '</pre>',
 					'last_updated'  => $response['published_at'],
 					'download_link' => $assets['browser_download_url'],
 				];
@@ -184,7 +187,7 @@ class Updater {
 
 		$this->get_repository_data();
 
-		if ( empty( $this->github_response ) ) {
+		if ( empty( $this->github_response['tag_name'] ) ) {
 			return $transient;
 		}
 
