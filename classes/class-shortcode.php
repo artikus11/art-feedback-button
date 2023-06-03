@@ -7,8 +7,21 @@ class Shortcode {
 	public function setup_hooks(): void {
 
 		add_shortcode( 'afb', [ $this, 'button' ] );
+
+		add_action( 'wp_footer', array( $this, 'add_modal_wrapper' ) );
 	}
 
+
+	/**
+	 * @return void
+	 *
+	 * @todo переделать вызов кнопки - по нажатию показывать что окно открылось потом только загружать форму
+	 */
+	public function add_modal_wrapper(): void{
+		load_template(
+			afb()->get_template( 'modal.php' ),
+		);
+	}
 
 	/**
 	 * @param $atts
