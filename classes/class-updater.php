@@ -22,17 +22,17 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private array $plugin = [];
+	private ?array $plugin = null;
 
 	/**
 	 * @var string|null
 	 */
-	private string $basename = '';
+	private ?string $basename = null;
 
 	/**
 	 * @var bool
 	 */
-	private bool $active;
+	private ?bool $active = false;
 
 	/**
 	 * @var string
@@ -52,7 +52,7 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private array $github_response = [];
+	private ?array $github_response = null;
 
 
 	public function __construct( $file ) {
@@ -109,12 +109,9 @@ class Updater {
 
 		$args = [];
 
-		if ( empty( $this->github_response ) ) {
+		if ( is_null( $this->github_response ) ) {
 
 			$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
-			$changelog   = file_get_contents(
-				sprintf( 'https://raw.githubusercontent.com/%s/%s//master/CHANGELOG.md', $this->username, $this->repository )
-			);
 
 			if ( $this->authorize_token ) {
 				$args ['headers'] = [
@@ -139,7 +136,7 @@ class Updater {
 				$this->github_response = [
 					'tag_name'      => $response['tag_name'],
 					'downloaded'    => $assets['download_count'],
-					'updates'       => '<pre style="border:none;width: 100%;word-break: break-all;white-space: pre;">' . $changelog . '</pre>',
+					'updates'       => $response['body'],
 					'last_updated'  => $response['published_at'],
 					'download_link' => $assets['browser_download_url'],
 				];
@@ -181,13 +178,13 @@ class Updater {
 
 		$checked = $transient->checked;
 
-		if ( empty( $checked ) ) {
+		if ( ! isset($checked[ $this->basename ]) ) {
 			return $transient;
 		}
 
 		$this->get_repository_data();
 
-		if ( empty( $this->github_response['tag_name'] ) ) {
+		if ( empty( $this->github_response ) ) {
 			return $transient;
 		}
 
@@ -229,8 +226,8 @@ class Updater {
 				'tested'            => '6.1',
 				'rating'            => '100.0',
 				'num_ratings'       => '1',
-				'downloaded'        => '2',
-				'added'             => '2021-05-15',
+				'downloaded'        => $this->github_response['downloaded'],
+				'added'             => $this->github_response['last_updated'],
 				'version'           => $this->github_response['tag_name'],
 				'author'            => $this->plugin["AuthorName"],
 				'author_profile'    => $this->plugin["AuthorURI"],
@@ -253,17 +250,15 @@ class Updater {
 
 	public function download_package( $args, $url ) {
 
-		if ( null !== $args['filename'] ) {
-			if ( $this->authorize_token ) {
-				$args = array_merge(
-					$args,
-					[
-						"headers" => [
-							"Authorization" => "token {$this->authorize_token}",
-						],
-					]
-				);
-			}
+		if ( ( null !== $args['filename'] ) && $this->authorize_token ) {
+			$args = array_merge(
+				$args,
+				[
+					"headers" => [
+						"Authorization" => "token {$this->authorize_token}",
+					],
+				]
+			);
 		}
 
 		remove_filter( 'http_request_args', [ $this, 'download_package' ] );
