@@ -62,7 +62,7 @@ class Core {
 		$updater = new Updater( AFB_PLUGIN_AFILE );
 		$updater->set_repository( 'art-feedback-button' );
 		$updater->set_username( 'artikus11' );
-		$updater->set_authorize( 'Z2hwX3FmOHVsOXJVV2pSaVFUVjd3MXVybkpVbWNVT3VCbzBNV0ZCWA==' );
+
 		$updater->init();
 	}
 	/**

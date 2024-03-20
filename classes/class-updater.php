@@ -47,7 +47,7 @@ class Updater {
 	/**
 	 * @var string
 	 */
-	private string $authorize_token;
+	private string $authorize_token = '';
 
 	/**
 	 * @var array|null
@@ -112,9 +112,6 @@ class Updater {
 		if ( is_null( $this->github_response ) ) {
 
 			$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
-			$changelog   = file_get_contents(
-				sprintf( 'https://raw.githubusercontent.com/%s/%s//master/CHANGELOG.md', $this->username, $this->repository )
-			);
 
 			if ( $this->authorize_token ) {
 				$args ['headers'] = [
@@ -130,11 +127,20 @@ class Updater {
 				try {
 					$response = json_decode( wp_remote_retrieve_body( $request ), true, 512, JSON_THROW_ON_ERROR );
 				} catch ( \JsonException $e ) {
+					return;
 				}
 			}
 
-			if ( is_array( $response ) ) {
+			if ( is_array( $response ) && ! empty( $response['assets'] ) ) {
 				$assets = current( $response['assets'] );
+
+				$changelog = file_get_contents(
+					sprintf(
+						'https://raw.githubusercontent.com/%s/%s//master/CHANGELOG.md',
+						$this->username,
+						$this->repository
+					)
+				);
 
 				$this->github_response = [
 					'tag_name'      => $response['tag_name'],
@@ -181,7 +187,7 @@ class Updater {
 
 		$checked = $transient->checked;
 
-		if ( ! isset($checked[ $this->basename ]) ) {
+		if ( ! isset( $checked[ $this->basename ] ) ) {
 			return $transient;
 		}
 

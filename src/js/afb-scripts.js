@@ -162,7 +162,7 @@ buttons.forEach( buttonShortcode =>
 			emails: thisButton.dataset.afbEmails
 		};
 
-		this.setAttribute( 'disabled', 'disabled' );
+		thisButton.setAttribute( 'disabled', 'disabled' );
 
 		AFB_viewModal( url, {
 			method:  'POST',
@@ -172,9 +172,11 @@ buttons.forEach( buttonShortcode =>
 			body:    JSON.stringify( dataSend )
 		} ).then( function ( result ) {
 
-			document.body.insertAdjacentHTML( 'beforeend', result.html );
+			//document.body.insertAdjacentHTML( 'beforeend', result.html );
 			thisButton.removeAttribute( 'disabled' );
 
+			console.log(document.querySelector('#afb-modal .afb-modal__overlay'));
+			document.querySelector('#afb-modal .afb-modal__overlay').innerHTML = result.html;
 			AFB_modalShow();
 
 			const modalWindow        = document.querySelector( '.afb-modal__container' );

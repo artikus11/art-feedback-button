@@ -56,7 +56,7 @@ class Rest {
 		ob_start();
 
 		load_template(
-			afb()->get_template( 'modal.php' ),
+			afb()->get_template( 'modal-content.php' ),
 			true,
 			[
 				'emails' => $request->get_param( 'emails' ) ?? '',
