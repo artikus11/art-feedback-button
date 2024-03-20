@@ -52,7 +52,7 @@ class Updater {
 	/**
 	 * @var array|null
 	 */
-	private array $github_response = [];
+	private ?array $github_response = null;
 
 
 	public function __construct( $file ) {
@@ -109,7 +109,7 @@ class Updater {
 
 		$args = [];
 
-		if ( empty( $this->github_response ) ) {
+		if ( is_null( $this->github_response ) ) {
 
 			$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases/latest', $this->username, $this->repository );
 
